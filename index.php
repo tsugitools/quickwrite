@@ -17,7 +17,7 @@ $OUTPUT->header();
 
 include("tool-header.html");
 
-$OUTPUT->bodyStart();
+$OUTPUT->bodyStart();    
 
 
 
@@ -76,3 +76,4 @@ $OUTPUT->footerStart();
 include("tool-footer.html");
 
 $OUTPUT->footerEnd();
+

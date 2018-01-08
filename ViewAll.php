@@ -19,7 +19,7 @@ $OUTPUT->header();
 include("tool-header.html");
 include("tool-js.html");
 
-$OUTPUT->bodyStart();
+$OUTPUT->bodyStart();    
 
 include("menu.php");
 echo ('<h2>Quick Write</h2>');

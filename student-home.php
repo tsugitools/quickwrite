@@ -18,7 +18,7 @@ $OUTPUT->header();
 
 include("tool-header.html");
 
-$OUTPUT->bodyStart();
+$OUTPUT->bodyStart();    
 
 include("menu.php");
 
