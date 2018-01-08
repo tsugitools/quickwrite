@@ -1,1 +1,66 @@
 /* Main CSS file */
+* {
+    border-radius: 0 !important;
+}
+h3 {
+    font-size: 22px;
+}
+a.disabled, a.disabled:hover {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: .65;
+    box-shadow: none;
+	
+}
+.navbar {
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+}
+.navbar-header {
+    padding-right: 16px;
+    padding-left: 16px;
+}
+.navbar-nav .fa-stack {
+    position: absolute;
+}
+div.row {
+    margin-left: 0;
+    margin-right: 0;
+	padding:0px;
+	
+}
+span.menu-with-icon {
+    padding-left: 2.2em;
+}
+.panel-heading.list-question > a.pull-right {
+    margin-top: 1em;
+}
+.panel-heading .deleteQuestion {
+    margin-left: 8px;
+}
+.panel-heading h3 > a {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.panel-success .panel-heading h3 > a {
+    color: #3c763d;
+}
+.panel-body a:hover {
+    text-decoration: none;
+}
+a.publish-link {
+    font-size: .85em;
+    margin-top: -4px;
+}
+#import-q-row {
+    border: 1px solid #E0E0E0;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
+    padding: 8px;
+}
+/* List */
+h3. a {
+    display: inline-block;
+    vertical-align: text-bottom;
+}
+.
