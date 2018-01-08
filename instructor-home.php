@@ -40,7 +40,7 @@ foreach ( $questions as $row ) {
 	echo('
 	    <div class="panel-body" style="margin-bottom:3px;">           
 			<div class="col-sm-1 noPadding text-center" ><h4>'.$row["QNum"].'</h4></div>
-			<div class="col-sm-8 noPadding" >
+			<div class="col-sm-7 noPadding" >
 			
 			
 			
@@ -65,7 +65,7 @@ foreach ( $questions as $row ) {
 					
 		echo('	</div>			
 
-			<div class="col-sm-1 noPadding" style="float:right; width:195px;">
+			<div class="col-sm-4 noPadding" style="float:right; width:210px;">
 			<a class="btn btn-danger pull-right" href="actions/Delete.php?QID='.$row["QID"].'" onclick="return ConfirmDelete();"><span class="fa fa-trash"></span></a>');
 	if($QID == $row["QID"]){
 			
@@ -162,7 +162,7 @@ if($_GET["Add"]){
 	echo('<form method="post" action="actions/AddQ_Submit.php">
 	    <div class="panel-body" style="margin-bottom:3px;">           
 			<div class="col-sm-1 noPadding text-center" > <h4>'.$_SESSION["Next"].'</h4></div>
-			<div class="col-sm-8 noPadding" >
+			<div class="col-sm-7 noPadding" >
 			   <textarea class="form-control" name="Question" id="Question" rows="3" autofocus required></textarea>
 			
             <input type="hidden" name="QNum" value="'.$_SESSION["Next"].'"/>
@@ -170,7 +170,7 @@ if($_GET["Add"]){
 					
 			</div>					
 
-			<div class="col-sm-1 noPadding" style="float:right; width:120px;"><br>
+			<div class="col-sm-4 noPadding" style="float:right; width:120px;"><br>
 			<a class="btn btn-danger pull-right disabled" href="" ><span class="fa fa-trash" ></span></a>
 			<input type="submit" class="btn btn-success" value="Save" style="width:70px;">');
 	
