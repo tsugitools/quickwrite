@@ -159,8 +159,7 @@ foreach ( $questions as $row ) {
 			<textarea class="form-control" name="Question" rows="3" autofocus required style="resize:none;">'.$row["Question"].'</textarea>');
 			
 	
-	  echo('<br><br>
-	  
+	  echo('<br>	  
 	  <button type="button" class="btn btn-danger" data-dismiss="modal" style="width:70px; float:right;" >Cencel</button>
 	  <input type="submit" class="btn btn-success" style="width:70px; float:right; margin-right:10px;" value="Save">');
 					?>
