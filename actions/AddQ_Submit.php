@@ -29,7 +29,7 @@ if ( $USER->instructor ) {
 		$QW_DAO->updateQuestion($QID, $Question);
 	}
 	   
-header( 'Location: '.addSession('../instructor-home.php?Add=1') ) ;
+header( 'Location: '.addSession('../instructor-home.php?Add=0') ) ;
 	
 }else{
 	
