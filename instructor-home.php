@@ -185,7 +185,7 @@ if($_GET["Add"]){
 	    <div class="panel-body" style="margin-bottom:3px;">           
 			<div class="col-sm-1 noPadding text-center" > <h4>'.$_SESSION["Next"].'</h4></div>
 			<div class="col-sm-8 noPadding" >
-			   <textarea class="form-control" name="Question" id="Question" rows="3" autofocus required></textarea>
+			   <textarea class="form-control" name="Question" id="Question" rows="3" autofocus required style="resize:none;"></textarea>
 			
             <input type="hidden" name="QNum" value="'.$_SESSION["Next"].'"/>
 			<input type="hidden" name="Flag" value="1"/>
