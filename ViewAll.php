@@ -26,7 +26,7 @@ echo ('
 <div style="margin-left:30px;"><h2>Quick Write</h2>');
 
 
-echo(' <a class="btn btn-default" href="instructor-home.php?Add=0" style="float:right;">Back to Main Page</a><br>');
+echo(' <a class="btn btn-default" href="instructor-home.php?Add=0" style="float:right; width:150px;">Back to Main Page</a><br>');
 
 
 

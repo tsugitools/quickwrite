@@ -39,7 +39,7 @@ else {$msg=$Total." questions posted";}
 if(isset($_GET["QID"])){$QID = $_GET["QID"];}
 else{$QID = 0;}
 
-echo(' <a class="btn btn-default" href="ViewAll.php" style="float:right;">View All Results</a><br> ');
+echo(' <a class="btn btn-default" href="ViewAll.php" style="float:right; width:150px;">View All Results</a><br> ');
 	echo ('<br>Add questions to quickly collect feedback from your students.<span style="float:right;font-style: italic; margin-right:5px;">'.$msg.'</span><br><br>');
 
 	
@@ -53,7 +53,7 @@ foreach ( $questions as $row ) {
 			 <div style="background-color:lightgray; width:100%;padding:10px; min-height:60px;border:1px gray solid; " >'.$row["Question"].'</div>
          </div>			
 
-		<div class="col-sm-3 noPadding" style="width:225px;">
+		<div class="col-sm-3 noPadding" style="width:226px;">
 			<a class="btn btn-danger pull-right" href="actions/Delete.php?QID='.$row["QID"].'" onclick="return ConfirmDelete();"><span class="fa fa-trash"></span></a>');
 	
 			echo(' <a href="#Edit_'.$row['QID'].'"  class="btn btn-success"  data-toggle="modal" >Edit </a>');
@@ -149,7 +149,7 @@ foreach ( $questions as $row ) {
 			
 				
 			
-			<div class="modal-content" style="width:100%; padding:10px;height:180px;">
+			<div class="modal-content" style="width:100%; padding:10px;height:170px;">
 				
 				<?php
 	echo ('
@@ -161,7 +161,7 @@ foreach ( $questions as $row ) {
 			
 	
 	  echo('<br>	  
-	  <button type="button" class="btn btn-danger" data-dismiss="modal" style="width:70px; float:right;" >Cencel</button>
+	  <button type="button" class="btn btn-danger" data-dismiss="modal" style="width:70px; float:right;" >Cancel</button>
 	  <input type="submit" class="btn btn-success" style="width:70px; float:right; margin-right:10px;" value="Save">');
 					?>
 				
@@ -192,7 +192,7 @@ if($_GET["Add"]){
 					
 			</div>					
 
-			<div class="col-sm-3 noPadding" style="width:225px;">
+			<div class="col-sm-3 noPadding" style="width:226px;">
 			
 			<input type="submit" class="btn btn-success" value="Save" >');
 	
