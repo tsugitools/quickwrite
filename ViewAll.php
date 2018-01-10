@@ -41,7 +41,7 @@ foreach ( $StudentList as $row ) {
 	
 	echo('
 	    <div class="panel-body" style="border:1px solid gray;">           
-			<div class="col-sm-3 " style="width:225px"><b>'.$row["FirstName"].' '.$row["LastName"].'</b>');
+			<div class="col-sm-3 " style="width:210px"><b>'.$row["FirstName"].' '.$row["LastName"].'</b>');
 			
 		$UserID = 	$row["UserID"];
 		$questions = $QW_DAO->getQuestions($SetID);	
@@ -72,7 +72,7 @@ foreach ( $StudentList as $row ) {
 
 
 
-						echo ('<table style="width:100%;background-color:#E6E6E6; margin-bottom:10px; border-bottom:1px solid gray;"><tr ><td width="90" valign="top" ><b>Question '.$row1["QNum"].'</b></td><td>'.$A.'</td></tr></table>'); 
+						echo ('<table style="width:100%;background-color:#E6E6E6; margin-bottom:10px; border-bottom:1px solid gray;"><tr ><td width="90" valign="top" ><b> Question '.$row1["QNum"].'</b></td><td>'.$A.'</td></tr></table>'); 
 
 				 }
 
