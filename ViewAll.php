@@ -22,7 +22,8 @@ include("tool-js.html");
 $OUTPUT->bodyStart();    
 
 include("menu.php");
-echo ('<h2>Quick Write</h2>');
+echo ('
+<div style="margin-left:30px;"><h2>Quick Write</h2>');
 
 
 echo(' <a class="btn btn-default" href="instructor-home.php?Add=0" style="float:right;">Back to Main Page</a><br>');
@@ -40,7 +41,7 @@ foreach ( $StudentList as $row ) {
 	
 	echo('
 	    <div class="panel-body" style="border:1px solid gray;">           
-			<div class="col-sm-2"><b>'.$row["FirstName"].' '.$row["LastName"].'</b>');
+			<div class="col-sm-3"><b>'.$row["FirstName"].' '.$row["LastName"].'</b>');
 			
 		$UserID = 	$row["UserID"];
 		$questions = $QW_DAO->getQuestions($SetID);	
@@ -49,7 +50,7 @@ foreach ( $StudentList as $row ) {
 		$D1 =$dateTime1->format("m-d-y")." at ".$dateTime1->format("h:i A");
 
 					echo('<br><i>'.$D1.'</i> </div>
-			<div class="col-sm-10 noPadding">
+			<div class="col-sm-9 noPadding">
 				
 			
 			');
@@ -92,6 +93,8 @@ foreach ( $StudentList as $row ) {
 	
 	
 }
+
+echo ('</div>');
 	
 $OUTPUT->footerStart();
 

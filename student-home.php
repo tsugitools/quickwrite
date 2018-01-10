@@ -22,7 +22,9 @@ $OUTPUT->bodyStart();
 
 include("menu.php");
 
-echo ('<h2>Quick Write</h2>');
+echo ('
+<div style="margin-left:30px;">
+<h2>Quick Write</h2>');
 $SetID = $_SESSION["SetID"];
 $questions = $QW_DAO->getQuestions($SetID);	
 $Total = count($questions);	
@@ -45,8 +47,8 @@ foreach ( $questions as $row ) {
 	
 	echo('
 	             
-			'.$row["QNum"].'.'.$row["Question"].'<br><br>
-			<textarea class="form-control" name="A'.$row["QNum"].'" rows="3" autofocus required style="width:70%;"></textarea>
+			<b>'.$row["QNum"].'.'.$row["Question"].'</b><br><br>
+			<textarea class="form-control" name="A'.$row["QNum"].'" rows="3" autofocus style="width:70%;resize:none;"></textarea>
 			<input type="hidden" name="Q'.$row["QNum"].'" value="'.$row["QID"].'"/>
 			<input type="hidden" name="Total" value="'.$Total.'"/>
 			
@@ -62,6 +64,7 @@ echo ('</form></div>');
 	
 }
 
+echo ('</div>');
 $OUTPUT->footerStart();
 
 include("tool-footer.html");

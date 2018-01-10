@@ -23,18 +23,24 @@ include("tool-js.html");
 $OUTPUT->bodyStart();    
 
 include("menu.php");
-echo ('<h2>Quick Write</h2>');
+echo ('
+<div style="margin-left:30px;">
+<h2>Quick Write</h2>');
 $SetID = $_SESSION["SetID"];
 $questions = $QW_DAO->getQuestions($SetID);	
 $Total = count($questions);	
 $_SESSION["Next"] = $Total +1;
 
+if($Total==0){$msg="0 question posted";}
+else if($Total==1){$msg="1 question posted";}
+else {$msg=$Total." questions posted";}
+
 
 if(isset($_GET["QID"])){$QID = $_GET["QID"];}
 else{$QID = 0;}
 
-echo(' <a class="btn btn-default" href="ViewAll.php" style="float:right;">View All Results</a> ');
-	echo ('<br>Add questions to quickly collect feedback from your students.<br><br>');
+echo(' <a class="btn btn-default" href="ViewAll.php" style="float:right;">View All Results</a><br> ');
+	echo ('<br>Add questions to quickly collect feedback from your students.<span style="float:right;font-style: italic; margin-right:5px;">'.$msg.'</span><br><br>');
 
 	
 foreach ( $questions as $row ) {
@@ -42,12 +48,12 @@ foreach ( $questions as $row ) {
 	
 	echo('
 	    <div class="panel-body" style="margin-bottom:3px;">           
-		 <div class="col-sm-1 noPadding text-center" ><h4>'.$row["QNum"].'</h4></div>
-		 <div class="col-sm-8 noPadding" >
+		 <div class="col-sm-1 noPadding text-center" style="padding:0px;"><h4>'.$row["QNum"].'</h4></div>
+		 <div class="col-sm-8 noPadding" style="padding:0px;">
 			 <div style="background-color:lightgray; width:100%;padding:10px; min-height:60px;border:1px gray solid; " >'.$row["Question"].'</div>
          </div>			
 
-		<div class="col-sm-3 noPadding" style="float:right; width:225px;">
+		<div class="col-sm-3 noPadding" style="width:225px;">
 			<a class="btn btn-danger pull-right" href="actions/Delete.php?QID='.$row["QID"].'" onclick="return ConfirmDelete();"><span class="fa fa-trash"></span></a>');
 	
 			echo(' <a href="#Edit_'.$row['QID'].'"  class="btn btn-success"  data-toggle="modal" >Edit </a>');
@@ -58,12 +64,12 @@ foreach ( $questions as $row ) {
 
 <div class="modal fade" id="<?php echo $row['QID']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog" style="margin-top:100px;">
-			<div class="modal-content" style="width:100%;  overflow-y: scroll; height:700px;">
+			<div class="modal-content" style="width:100%; ">
 			
 				<div class="modal-header" style="background-color: #427DB0; color:white;">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<?php echo ('<h3>Q'.$row["QNum"].' '.$row["Question"].'</h3>');?>
-					</div><div>
+					<button type="button" class="close" data-dismiss="modal" style="color:white;opacity: .9;font-size: 30px; margin-right:5px;">&times;</button>
+					<?php echo ('<h3>Question '.$row["QNum"].'</h3><h4>'.$row["Question"].'</h4>');?>
+					</div><div style="width:100%;  overflow-y: scroll;height:650px;">
 				<?php
 	
 			$QID = $row['QID'];
@@ -71,35 +77,30 @@ foreach ( $questions as $row ) {
 	
 	$rNum=0;
 				foreach ( $StudentList as $row3 ) {
-
-					echo('
-						<div class="panel-body " style="border:1px solid gray;">           
-							<div class="col-sm-2 noPadding"><b>'.$row3["FirstName"].' '.$row3["LastName"].'</b>');				
-					echo('</div><div class="col-sm-10 noPadding">');
 									$UserID = 	$row3["UserID"];
 									$A="";													
 									$Data = $QW_DAO->Review($QID, $UserID);	
-					
-					
 					
 									foreach ( $Data as $row2 ) {
 
 													$A= $row2["Answer"];
 													$Date1 = $row2["Modified"];
-													$rNum++;
+													if($A!=""){$rNum++;}
 
 
 												}
 
+					if($A !=""){
 
+					echo('
+						<div class="panel-body " style="border:1px solid gray;">           
+							<div class="col-sm-2 noPadding"><b>'.$row3["FirstName"].' '.$row3["LastName"].'</b>');				
+					echo('</div><div class="col-sm-10 noPadding">');
 										echo ($A); 
 
-							
 							echo ('</div>
-						</div>
-
-
-						'); 
+						</div>'); 
+					}
 
 
 				}
@@ -183,16 +184,16 @@ if($_GET["Add"]){
 	echo('<form method="post" action="actions/AddQ_Submit.php">
 	    <div class="panel-body" style="margin-bottom:3px;">           
 			<div class="col-sm-1 noPadding text-center" > <h4>'.$_SESSION["Next"].'</h4></div>
-			<div class="col-sm-8 noPadding" >
-			   <textarea class="form-control" name="Question" id="Question" rows="3" autofocus required style="resize:none;"></textarea>
+			<div class="col-sm-8 noPadding"  style="padding:0px;">
+			   <textarea class="form-control" name="Question" id="Question" rows="3" autofocus required style="resize:none; width:100%;"></textarea>
 			
             <input type="hidden" name="QNum" value="'.$_SESSION["Next"].'"/>
 			<input type="hidden" name="Flag" value="1"/>
 					
 			</div>					
 
-			<div class="col-sm-3 noPadding" style="float:right; width:225px;">
-			<a class="btn btn-danger pull-right disabled" href="" ><span class="fa fa-trash" ></span></a>
+			<div class="col-sm-3 noPadding" style="width:225px;">
+			
 			<input type="submit" class="btn btn-success" value="Save" >');
 	
 			
@@ -217,6 +218,8 @@ if($_GET["Add"]){
 
 
 	echo ('<a class="btn btn-success" href="instructor-home.php?Add=1" style="margin:50px;">Add Question</a>');
+
+echo ('</div>');
 	
 
 $OUTPUT->footerStart();

@@ -22,7 +22,9 @@ $OUTPUT->bodyStart();
 
 include("menu.php");
 
-echo ('<h2>Quick Write</h2>');
+echo ('
+<div style="margin-left:30px;">
+<h2>Quick Write</h2>');
 $SetID = $_SESSION["SetID"];
 $questions = $QW_DAO->getQuestions($SetID);	
 $Total = count($questions);	
@@ -30,8 +32,8 @@ $Total = count($questions);
 ?>
 <style>
 	h3{color:green; margin:15px; font-weight: bold;}
-	#checkmark  {float:right; margin-right:calc(25% - 90px);}
-	#answer{width:75%; min-height:110px; border: 1px solid lightgray; padding:5px;}
+	#checkmark  {float:right; margin-right:calc(25% - 90px); font-size:70px;color:green;}
+	#answer{width:75%; min-height:110px; border: 1px solid lightgray; padding:5px; background-color:lightgray;}
 @media (max-width: 480px) {
     #checkmark  {display:none;}
 	#answer{width:100%;}
@@ -74,11 +76,14 @@ if($Total == 0){
 	
 	echo('
 	             
-			'.$row["QNum"].'.'.$row["Question"].'<br><br>
+			<b>'.$row["QNum"].'.'.$row["Question"].'</b><br><br>
 	');
 		
 	
-		if ($A != ""){ echo "<img src='checkmark.png' id='checkmark'>";}
+		if ($A != ""){ 
+			
+			 echo ('<i class="fa fa-check" id="checkmark"></i>');
+			}
 					
 		
 		
@@ -98,6 +103,7 @@ echo ('</div>');
 	
 }
 
+echo ('</div>');
 $OUTPUT->footerStart();
 
 include("tool-footer.html");

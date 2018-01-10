@@ -55,12 +55,6 @@ class QW_DAO {
 	
 	
 
-    function togglePublish($SetID, $toggle) {
-        $query = "UPDATE {$this->p}qw_main SET Active = :toggle WHERE SetID = :SetID;";
-        $arr = array(':toggle' => $toggle, ':SetID' => $SetID);
-        $this->PDOX->queryDie($query, $arr);
-    }
-
     function createQuestion($SetID, $QNum, $Question) {
 		
 		$query = "INSERT INTO {$this->p}qw_questions (SetID, QNum, Question) VALUES (:SetID, :QNum, :Question);";
@@ -118,58 +112,6 @@ class QW_DAO {
         $this->PDOX->queryDie($query, $arr);
     }
 
-    function deleteAllQuestion($SetID) {
-        $query = "DELETE FROM {$this->p}qw_questions WHERE SetID = :SetID;";
-        $arr = array(':SetID' => $SetID);
-        $this->PDOX->queryDie($query, $arr);
-    }
-
-    function deleteMain($SetID) {
-        $query = "DELETE FROM {$this->p}qw_main WHERE SetID = :SetID ;";
-        $arr = array(':SetID' => $SetID);
-        $this->PDOX->queryDie($query, $arr);
-    }
-
-
-	
-    function getCourseNameForId($context_id) {
-        $query = "SELECT title FROM {$this->p}lti_context WHERE context_id = :contextId;";
-        $arr = array(':contextId' => $context_id);
-        $context = $this->PDOX->rowDie($query, $arr);
-        return $context["title"];
-    }
-
-    
-  
-    function getLinkedSet($linkId) {
-        $query = "SELECT * FROM {$this->p}qw_link WHERE link_id = :linkId;";
-        $arr = array(':linkId' => $linkId);
-        return $this->PDOX->rowDie($query, $arr);
-    }
-
-    function saveOrUpdateLink($SetID, $linkId) {
-         if ($this->linkIsSet($linkId)) {
-             $query = "UPDATE {$this->p}qw_link SET SetID = :SetID WHERE link_id = :linkId;";
-         } else {
-             $query = "INSERT INTO {$this->p}qw_link (SetID, link_id) VALUES (:SetID, :linkId);";
-         }
-         $arr = array(':SetID' => $SetID, ':linkId' => $linkId);
-         $this->PDOX->queryDie($query, $arr);
-    }
-
-    function deleteLink($linkId) {
-        $query = "DELETE FROM {$this->p}qw_link WHERE link_id = :linkId;";
-        $arr = array(':linkId' => $linkId);
-        $this->PDOX->queryDie($query, $arr);
-    }
-
-    private function linkIsSet($linkId) {
-        $query = "SELECT * FROM {$this->p}qw_link WHERE link_id = :linkId;";
-        $arr = array(':linkId' => $linkId);
-        $theLink = $this->PDOX->rowDie($query, $arr);
-        return $theLink !== false;
-    }
-	
 	
 	
 	function userDataExists($SetID, $userId) {
@@ -190,6 +132,7 @@ class QW_DAO {
         $arr = array(':QID' => $QID, ':userId' => $userId);
         return $this->PDOX->allRowsDie($query, $arr);
     }
+	
 
 	
  function Report($SetID) {
@@ -249,6 +192,22 @@ function findUserID($user_key) {
         $arr = array(':user_key' => $user_key);        
         $context = $this->PDOX->rowDie($query, $arr);
         return $context["user_id"];
+}
+	
+		
+function findEmail($user_id) {
+        $query = "SELECT email FROM {$this->p}lti_user WHERE user_id = :user_id;";
+        $arr = array(':user_id' => $user_id);        
+        $context = $this->PDOX->rowDie($query, $arr);
+        return $context["email"];
+}
+	
+			
+function findDate($UserID, $SetID) {
+        $query = "SELECT Modified FROM {$this->p}qw_activity WHERE UserID = :UserID AND SetID = :SetID;";
+        $arr = array(':UserID' => $UserID, ':SetID' => $SetID);        
+        $context = $this->PDOX->rowDie($query, $arr);
+        return $context["Modified"];
 }
 	
 	

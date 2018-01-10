@@ -20,27 +20,37 @@ if ( $USER->instructor ) {
    
     $questions = $QW_DAO->getQuestions($SetID);
 
-
+ $rowCounter = 1;
     $Total = count($questions);
 
     $exportFile = new PHPExcel();
 
     
-   $exportFile->setActiveSheetIndex(0)->setCellValue('A1', 'Student Name');
-	$exportFile->setActiveSheetIndex(0)->setCellValue('B1', 'Question');
-	$exportFile->setActiveSheetIndex(0)->setCellValue('C1', 'Response');
-	$exportFile->setActiveSheetIndex(0)->setCellValue('D1', 'Date');
+    $exportFile->setActiveSheetIndex(0)->setCellValue('A1', 'Student');
+	$exportFile->setActiveSheetIndex(0)->setCellValue('B1', 'Username');
+	$exportFile->setActiveSheetIndex(0)->setCellValue('C1', 'Date of Submission');
 	
-	
+		
 	$exportFile->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
 	$exportFile->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
 	$exportFile->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
-	$exportFile->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
-	$exportFile->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-	$exportFile->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-	$exportFile->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-	$exportFile->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-	//$exportFile->getActiveSheet()->getColumnDimension('C')->setWidth(10);
+	
+	$exportFile->getActiveSheet()->getColumnDimension('A')->setWidth(20);
+	$exportFile->getActiveSheet()->getColumnDimension('B')->setWidth(10);
+	$exportFile->getActiveSheet()->getColumnDimension('C')->setWidth(25);
+	
+	
+	
+	$letters = range('C','Z');
+		for($x = 1; $x<=$Total; $x++){	
+			$col1 = $x+2;
+			$exportFile->getActiveSheet()->setCellValueByColumnAndRow($col1, $rowCounter, "Question ".$x);
+			
+			$cell_name = $letters[$x]."1";    
+   			$exportFile->getActiveSheet()->getStyle($cell_name)->getFont()->setBold(true);
+			
+			
+		}
 	
 	
 $StudentList = $QW_DAO->Report($SetID);	
@@ -50,45 +60,42 @@ $StudentList = $QW_DAO->Report($SetID);
         $columnIterator->next();
 
 
-      $rowCounter = 1;
+     
   foreach ( $StudentList as $row ) {
- 		 //  $rowCounter++;	  
-		 //  $exportFile->getActiveSheet()->setCellValue('A'.$rowCounter, $row["FirstName"].' '.$row["LastName"]);
-
-			$UserID = 	$row["UserID"];
+ 		   	$rowCounter++;	  
+	  		$UserID = 	$row["UserID"];
+	  
+	  		$Email = $QW_DAO->findEmail($UserID);
+	  		$UserName = explode("@",$Email);
+	  
+	  		$Modified1 = $QW_DAO->findDate($UserID, $SetID);
+	        $Modified  =  new DateTime($Modified1);
+		   	$exportFile->getActiveSheet()->setCellValue('A'.$rowCounter, $row["LastName"].', '.$row["FirstName"]);
+	  
+	  		$exportFile->getActiveSheet()->setCellValue('B'.$rowCounter, $UserName[0]);		
+	  		$exportFile->getActiveSheet()->setCellValue('C'.$rowCounter, $Modified->format('m/d/y - H:i A '));	
+	  
 			$questions = $QW_DAO->getQuestions($SetID);	
-		   
-		   foreach ( $questions as $row1 ) {
-			   			$rowCounter++;
+	  		$QTotal = count($questions);
+		    $col = 3; 
+		   foreach ( $questions as $row1 ) {			   			
 						$QID = $row1["QID"];
 			   			$A="";	
-							
-
+						
 						$Data = $QW_DAO->Review($QID, $UserID);	
 						foreach ( $Data as $row2 ) {
 								$A= $row2["Answer"];
-								$Date1 = $row2["Modified"];
+								//$Date1 = $row2["Modified"];
 						}
 
-			   
-		   				$exportFile->getActiveSheet()->setCellValue('A'.$rowCounter, $row["FirstName"].' '.$row["LastName"]);
-						$exportFile->getActiveSheet()->setCellValue('B'.$rowCounter, 'Question '.$row1["QNum"]);
-						$exportFile->getActiveSheet()->setCellValue('C'.$rowCounter, $A);
-			   			$exportFile->getActiveSheet()->setCellValue('D'.$rowCounter, $Date1);
-
-			   			
-			   
-						$columnIterator->next();
+			$exportFile->getActiveSheet()->setCellValueByColumnAndRow($col, $rowCounter, $A);
+        	$col++;
 			
-    }
-            
-	  
-	  $columnIterator->next();
-	  
-
-        
-    
+    }          
+	
 }
+	 $columnIterator->next();
+	
 	$exportFile->getActiveSheet()->setTitle('Quick Write');
 
 	
