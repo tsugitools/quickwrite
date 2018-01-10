@@ -41,7 +41,7 @@ foreach ( $StudentList as $row ) {
 	
 	echo('
 	    <div class="panel-body" style="border:1px solid gray;">           
-			<div class="col-sm-3"><b>'.$row["FirstName"].' '.$row["LastName"].'</b>');
+			<div class="col-sm-3 " style="width:225px"><b>'.$row["FirstName"].' '.$row["LastName"].'</b>');
 			
 		$UserID = 	$row["UserID"];
 		$questions = $QW_DAO->getQuestions($SetID);	
