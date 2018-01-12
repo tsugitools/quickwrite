@@ -49,18 +49,3 @@ span.menu-with-icon {
 .panel-body a:hover {
     text-decoration: none;
 }
-a.publish-link {
-    font-size: .85em;
-    margin-top: -4px;
-}
-#import-q-row {
-    border: 1px solid #E0E0E0;
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
-    padding: 8px;
-}
-/* List */
-h3. a {
-    display: inline-block;
-    vertical-align: text-bottom;
-}
-.

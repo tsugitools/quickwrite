@@ -73,7 +73,7 @@ $StudentList = $QW_DAO->Report($SetID);
 		   	$exportFile->getActiveSheet()->setCellValue('A'.$rowCounter, $row["LastName"].', '.$row["FirstName"]);
 	  
 	  		$exportFile->getActiveSheet()->setCellValue('B'.$rowCounter, $UserName[0]);		
-	  		$exportFile->getActiveSheet()->setCellValue('C'.$rowCounter, $Modified->format('m/d/y - H:i A '));	
+	  		$exportFile->getActiveSheet()->setCellValue('C'.$rowCounter, $Modified->format('m/d/y - h:i A '));	
 	  
 			$questions = $QW_DAO->getQuestions($SetID);	
 	  		$QTotal = count($questions);
@@ -85,7 +85,7 @@ $StudentList = $QW_DAO->Report($SetID);
 						$Data = $QW_DAO->Review($QID, $UserID);	
 						foreach ( $Data as $row2 ) {
 								$A= $row2["Answer"];
-								//$Date1 = $row2["Modified"];
+								$A = str_replace("&#39;", "'", $A);
 						}
 
 			$exportFile->getActiveSheet()->setCellValueByColumnAndRow($col, $rowCounter, $A);

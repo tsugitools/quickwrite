@@ -23,6 +23,7 @@ include("tool-js.html");
 $OUTPUT->bodyStart();    
 
 include("menu.php");
+
 echo ('
 <div style="margin-left:30px;">
 <h2>Quick Write</h2>');
@@ -39,21 +40,29 @@ else {$msg=$Total." questions posted";}
 if(isset($_GET["QID"])){$QID = $_GET["QID"];}
 else{$QID = 0;}
 
-echo(' <a class="btn btn-default" href="ViewAll.php" style="float:right; width:150px;">View All Results</a><br> ');
-	echo ('<br>Add questions to quickly collect feedback from your students.<span style="float:right;font-style: italic; margin-right:5px;">'.$msg.'</span><br><br>');
+
+echo ('<div style="margin-bottom:20px;">Add questions to quickly collect feedback from your students.</div>');
 
 	
+echo(' <div id="Btn01">
+		<a class="btn btn-default" href="ViewAll.php" >View All Results</a>
+		<span style="float:right;font-style: italic; margin-top:10px; text-align:center; width:100%;">'.$msg.'</span></div><br>');
+
 foreach ( $questions as $row ) {
+	
+	$StudentNum = count($QW_DAO->ReportByQID($SetID, $row['QID']));
+	echo $StudentNum;
+	if($StudentNum <4){$h="325px;";}else{$h="650px;";}
 	
 	
 	echo('
 	    <div class="panel-body" style="margin-bottom:3px;">           
-		 <div class="col-sm-1 noPadding text-center" style="padding:0px;"><h4>'.$row["QNum"].'</h4></div>
-		 <div class="col-sm-8 noPadding" style="padding:0px;">
+		 <div class="col-sm-1 text-center" style="padding:0px;" id="Btn04"><h4>'.$row["QNum"].'</h4></div>
+		 <div class="col-sm-8" style="padding:0px;">
 			 <div style="background-color:lightgray; width:100%;padding:10px; min-height:60px;border:1px gray solid; " >'.$row["Question"].'</div>
          </div>			
 
-		<div class="col-sm-3 noPadding" style="width:226px;">
+		<div class="col-sm-3" id="Btn03">
 			<a class="btn btn-danger pull-right" href="actions/Delete.php?QID='.$row["QID"].'" onclick="return ConfirmDelete();"><span class="fa fa-trash"></span></a>');
 	
 			echo(' <a href="#Edit_'.$row['QID'].'"  class="btn btn-success"  data-toggle="modal" >Edit </a>');
@@ -68,8 +77,8 @@ foreach ( $questions as $row ) {
 			
 				<div class="modal-header" style="background-color: #427DB0; color:white;">
 					<button type="button" class="close" data-dismiss="modal" style="color:white;opacity: .9;font-size: 30px; margin-right:5px;">&times;</button>
-					<?php echo ('<h3>Question '.$row["QNum"].'</h3><h4>'.$row["Question"].'</h4>');?>
-					</div><div style="width:100%;  overflow-y: scroll;height:650px;">
+					<?php echo ('<h3 id="qTitle">Question '.$row["QNum"].'</h3><h4>'.$row["Question"].'</h4>');?>
+					</div><div style="width:100%;  overflow-y: scroll;height:<?php echo $h;?>">
 				<?php
 	
 			$QID = $row['QID'];

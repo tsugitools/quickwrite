@@ -1,54 +1,32 @@
 <?php
 require_once "../../config.php";
-require_once "../dao/QW_DAO.php";
+require_once('../dao/QW_DAO.php');
 
 use \Tsugi\Core\LTIX;
 use \QW\DAO\QW_DAO;
 
-// Retrieve the launch data if present
 $LAUNCH = LTIX::requireData();
 
 $p = $CFG->dbprefix;
-
 $QW_DAO = new QW_DAO($PDOX, $p);
 
-$SetID=$_SESSION["SetID"];
-$QID=$_POST["QID"];
-$QType = $_POST["QType"];
-
-$Question = str_replace("'", "&#39;", $_POST["Question"]);
-$Answer = str_replace("'", "&#39;", $_POST["Answer"]);
-
-$Point = $_POST["Point"];
-$FR = $_POST["FR"];
-$FW = $_POST["FW"];
+date_default_timezone_set('America/New_York');
+//echo date_default_timezone_get();
+  $Date2 = date("Y-m-d H:i:s");
 
 
-
-$FR = str_replace("'", "&#39;", $_POST["FR"]);
-$FW = str_replace("'", "&#39;", $_POST["FW"]);
-if(isset($_POST["RA"])){$RA = 1;}else{$RA = 0;}
-
-
-
-if ( $USER->instructor ) {
-
-	
-	if ($QType == "Multiple"){
 		
-		$A=$_POST["A"];$A = str_replace("'", "&#39;", $_POST["A"]);
-		$B=$_POST["B"];$B = str_replace("'", "&#39;", $_POST["B"]);
-		$C=$_POST["C"];$C = str_replace("'", "&#39;", $_POST["C"]);
-		$D=$_POST["D"];$D = str_replace("'", "&#39;", $_POST["D"]);
-		$QW_DAO->updateQuestion($QID, $Question, $Answer, $QType, $A, $B, $C, $D, $Point, $FR, $FW, $RA);}
+		$SetID=$_SESSION["SetID"];
 	
-	else if ($QType == "True/False"){$QW_DAO->updateQuestion2($QID, $Question, $Answer, $QType, $Point, $FR, $FW);}
-
+	for ($x = 1; $x < ($_POST["Total"]+1); $x++) {
+		$Temp = "A".$x;
+		$ActivityID = "Q".$x;	   
+		$Answer = str_replace("'", "&#39;", $_POST[$Temp]);
+		$ActivityID2 = $_POST[$ActivityID];
+		
+	echo $Answer."<br>";
+		$QW_DAO->updateAnswer($ActivityID2, $Answer, $Date2);
+	}
 	
-
-header( 'Location: '.addSession('../Qlist.php?SetID='.$SetID) ) ;
-
-} else {
-    // student so send back to index
-    header( 'Location: '.addSession('../index.php') ) ;
-}
+	header( 'Location: '.addSession('../student-report.php') ) ;
+	

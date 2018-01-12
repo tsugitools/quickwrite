@@ -28,18 +28,8 @@ echo ('
 $SetID = $_SESSION["SetID"];
 $questions = $QW_DAO->getQuestions($SetID);	
 $Total = count($questions);	
+$Edit2=0;
 
-?>
-<style>
-	h3{color:green; margin:15px; font-weight: bold;}
-	#checkmark  {float:right; margin-right:calc(25% - 90px); font-size:70px;color:green;}
-	#answer{width:75%; min-height:110px; border: 1px solid lightgray; padding:5px; background-color:lightgray;}
-@media (max-width: 480px) {
-    #checkmark  {display:none;}
-	#answer{width:100%;}
-}
-</style>
-<?php
 
 if($Total == 0){
 		
@@ -55,17 +45,22 @@ if($Total == 0){
 	echo('
 	<br>
 	<h3>Submitted on '.$D1.'</h3>
+	<form method="post" action="actions/Edit_Submit.php">
 	
 	<div class="panel-body" style="margin:15px; "> ');
 	foreach ( $questions as $row ) {
-	
+	$Edit=0;
 				$A="";	
 				$QID = $row["QID"];	
 		
 				$Data = $QW_DAO->Review($QID, $USER->id);	
 				foreach ( $Data as $row2 ) {
 
+					$ActivityID  =  $row2["ActivityID"];
+					
 					$A= $row2["Answer"];
+					if ($A == ""){$Edit=1;$Edit2=1;}
+					
 					$Date1 = $row2["Modified"];
 					
 					
@@ -74,11 +69,8 @@ if($Total == 0){
 	
 	
 	
-	echo('
-	             
-			<b>'.$row["QNum"].'.'.$row["Question"].'</b><br><br>
-	');
-		
+	echo('<b>'.$row["QNum"].'. '.$row["Question"].'</b><br><br>	
+	<input type="hidden" name="Q'.$row["QNum"].'" value="'.$ActivityID.'"/>');
 	
 		if ($A != ""){ 
 			
@@ -86,24 +78,27 @@ if($Total == 0){
 			}
 					
 		
-		
-		echo ('
-			
-			<div id="answer" >'.$A.'</div>
+		echo ('<div>');
+		if($Edit){
+			echo ('
+				<textarea class="form-control" name="A'.$row["QNum"].'" rows="3" autofocus id="answer" style="resize:none;background-color:white;"></textarea>
 				
-			<br><br>
-		   
+				<br>'); }
+		else{echo ('<div id="answer">'.$A.'</div><br>
+					<input type="hidden" name="A'.$row["QNum"].'" value="'.$A.'"/>'); }
+			echo ('</div>');
 		
-
-        '); 
-	 
  }
 
-echo ('</div>');
+echo ('<input type="hidden" name="Total"  value="'.$Total.'"/> </div>');
 	
 }
 
-echo ('</div>');
+if($Edit2){
+	echo('<input type="submit" class="btn btn-success" style="width:70px; margin-left:30px;" value="Submit">');
+}
+
+echo ('</form></div>');
 $OUTPUT->footerStart();
 
 include("tool-footer.html");

@@ -47,12 +47,12 @@ foreach ( $questions as $row ) {
 	
 	echo('
 	             
-			<b>'.$row["QNum"].'.'.$row["Question"].'</b><br><br>
-			<textarea class="form-control" name="A'.$row["QNum"].'" rows="3" autofocus style="width:70%;resize:none;"></textarea>
+			<b>'.$row["QNum"].'. '.$row["Question"].'</b><br><br>
+			<textarea class="form-control" name="A'.$row["QNum"].'" rows="3" autofocus style="width:70%;resize:none; margin-top:-7px;"></textarea>
 			<input type="hidden" name="Q'.$row["QNum"].'" value="'.$row["QID"].'"/>
 			<input type="hidden" name="Total" value="'.$Total.'"/>
 			
-			<br><br>
+			<br>
 		   
 		
 

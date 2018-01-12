@@ -73,6 +73,12 @@ class QW_DAO {
     }
 	
 	
+    function updateAnswer($ActivityID, $Answer, $Modified) {
+        $query = "UPDATE {$this->p}qw_activity set Answer = :Answer, Modified = :Modified where ActivityID = :ActivityID;";
+        $arr = array(':ActivityID' => $ActivityID, ':Answer' => $Answer, ':Modified' => $Modified);
+        $this->PDOX->queryDie($query, $arr);
+    }
+	
 	
 	
 	
@@ -128,7 +134,7 @@ class QW_DAO {
     }
 	
 	function Review($QID, $userId) {
-        $query = "SELECT * FROM {$this->p}qw_activity WHERE QID = :QID AND UserID = :userId ; ";
+        $query = "SELECT * FROM {$this->p}qw_activity WHERE QID = :QID AND UserID = :userId  order by Modified DESC; ";
         $arr = array(':QID' => $QID, ':userId' => $userId);
         return $this->PDOX->allRowsDie($query, $arr);
     }

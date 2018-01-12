@@ -25,23 +25,22 @@ include("menu.php");
 echo ('
 <div style="margin-left:30px;"><h2>Quick Write</h2>');
 
-
-echo(' <a class="btn btn-default" href="instructor-home.php?Add=0" style="float:right; width:150px;">Back to Main Page</a><br>');
-
-
+	
 
 $SetID = $_SESSION["SetID"];
 $StudentList = $QW_DAO->Report($SetID);		
 
-if(count($StudentList)){echo ('<br>View All Results.<a href="actions/ExportToFile.php" style="float:right;text-decoration: underline;font-style: italic; margin-right:30px;">Export Result</a><br><br>');
-					  }
-	
+if(count($StudentList)){echo ('<div style="margin-bottom:20px;">View All Results.</div>'); }
+
+
+echo('<div id="Btn02"> <a class="btn btn-default" href="instructor-home.php?Add=0" >Back to Main Page</a><a href="actions/ExportToFile.php" id="Btn02_1">Export Results</a></div><br>');
+
 
 foreach ( $StudentList as $row ) {
 	
 	echo('
-	    <div class="panel-body" style="border:1px solid gray;">           
-			<div class="col-sm-3 " style="width:210px"><b>'.$row["FirstName"].' '.$row["LastName"].'</b>');
+	    <div class="panel-body" style="border:1px solid gray; ">           
+			<div class="col-sm-3 " style="width:200px"><b>'.$row["FirstName"].' '.$row["LastName"].'</b>');
 			
 		$UserID = 	$row["UserID"];
 		$questions = $QW_DAO->getQuestions($SetID);	
@@ -72,7 +71,7 @@ foreach ( $StudentList as $row ) {
 
 
 
-						echo ('<table style="width:100%;background-color:#E6E6E6; margin-bottom:10px; border-bottom:1px solid gray;"><tr ><td width="90" valign="top" ><b> Question '.$row1["QNum"].'</b></td><td>'.$A.'</td></tr></table>'); 
+						echo ('<table style="width:100%;background-color:#E6E6E6; margin-bottom:10px; border-bottom:1px solid gray;"><tr ><td width="90" valign="top" style="padding-left:5px;"><b> Question '.$row1["QNum"].'</b></td><td>'.$A.'</td></tr></table>'); 
 
 				 }
 
