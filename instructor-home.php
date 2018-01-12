@@ -51,7 +51,6 @@ echo(' <div id="Btn01">
 foreach ( $questions as $row ) {
 	
 	$StudentNum = count($QW_DAO->ReportByQID($SetID, $row['QID']));
-	echo $StudentNum;
 	if($StudentNum <4){$h="325px;";}else{$h="650px;";}
 	
 	
