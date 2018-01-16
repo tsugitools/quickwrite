@@ -18,92 +18,78 @@ $OUTPUT->header();
 
 include("tool-header.html");
 
-$OUTPUT->bodyStart();    
+$OUTPUT->bodyStart();
 
 include("menu.php");
 
-echo ('
-<div style="margin-left:30px;">
-<h2>Quick Write</h2>');
+echo ('<div class="container">
+        <h2>Quick Write</h2>');
+
 $SetID = $_SESSION["SetID"];
-$questions = $QW_DAO->getQuestions($SetID);	
-$Total = count($questions);	
+$questions = $QW_DAO->getQuestions($SetID);
+$Total = count($questions);
+
 $Edit2=0;
 
+if ($Total == 0) {
+    echo ('<h4 style="margin:50px;">No question prompts have been created.</h3>');
+} else {
+    $Date1 = $QW_DAO->getUserData($SetID, $USER->id);
+    $dateTime1 = new DateTime($Date1["Modified"]);
+    $D1 =$dateTime1->format("m-d-y")." at ".$dateTime1->format("h:i A");
 
-if($Total == 0){
-		
-	echo ('<h4 style="margin:50px;">No question prompts have been created.</h3>');
-	
-} else{
+    echo('<h3>Submitted on '.$D1.'</h3>
+            <form method="post" action="actions/Edit_Submit.php">
+            <div class="panel-body">');
 
-	
-	$Date1 = $QW_DAO->getUserData($SetID, $USER->id);	
-	$dateTime1 = new DateTime($Date1["Modified"]);	
-	$D1 =$dateTime1->format("m-d-y")." at ".$dateTime1->format("h:i A");
-	
-	echo('
-	<br>
-	<h3>Submitted on '.$D1.'</h3>
-	<form method="post" action="actions/Edit_Submit.php">
-	
-	<div class="panel-body" style="margin:15px; "> ');
-	foreach ( $questions as $row ) {
-	$Edit=0;
-				$A="";	
-				$QID = $row["QID"];	
-		
-				$Data = $QW_DAO->Review($QID, $USER->id);	
-				foreach ( $Data as $row2 ) {
+    foreach ( $questions as $row ) {
+        $Edit = 0;
+        $A = "";
+        $QID = $row["QID"];
 
-					$ActivityID  =  $row2["ActivityID"];
-					
-					$A= $row2["Answer"];
-					if ($A == ""){$Edit=1;$Edit2=1;}
-					
-					$Date1 = $row2["Modified"];
-					
-					
-				}
+        $Data = $QW_DAO->Review($QID, $USER->id);
 
-	
-	
-	
-	echo('<b>'.$row["QNum"].'. '.$row["Question"].'</b><br><br>	
-	<input type="hidden" name="Q'.$row["QNum"].'" value="'.$ActivityID.'"/>');
-	
-		if ($A != ""){ 
-			
-			 echo ('<i class="fa fa-check" id="checkmark"></i>');
-			}
-					
-		
-		echo ('<div>');
-		if($Edit){
-			echo ('
-				<textarea class="form-control" name="A'.$row["QNum"].'" rows="3" autofocus id="answer" style="resize:none;background-color:white;"></textarea>
-				
-				<br>'); }
-		else{echo ('<div id="answer">'.$A.'</div><br>
-					<input type="hidden" name="A'.$row["QNum"].'" value="'.$A.'"/>'); }
-			echo ('</div>');
-		
- }
+        foreach ( $Data as $row2 ) {
+            $ActivityID  =  $row2["ActivityID"];
 
-echo ('<input type="hidden" name="Total"  value="'.$Total.'"/> </div>');
-	
+            $A= $row2["Answer"];
+            if ($A == "") {
+                $Edit=1;
+                $Edit2=1;
+            }
+            $Date1 = $row2["Modified"];
+        }
+
+        echo($row["QNum"].'. '.$row["Question"].'
+                <input type="hidden" name="Q'.$row["QNum"].'" value="'.$ActivityID.'"/>
+                ');
+
+        if ($A != "") {
+            echo ('<span class="fa fa-check" id="checkmark"></span>');
+        }
+
+        echo ('<div>');
+
+        if ($Edit) {
+            echo('<textarea class="form-control" name="A'.$row["QNum"].'" rows="3" autofocus id="answer" style="resize:none;background-color:white;"></textarea>');
+        } else {
+            echo('<div id="answer">'.$A.'</div>
+                    <input type="hidden" name="A'.$row["QNum"].'" value="'.$A.'"/>');
+        }
+
+        echo ('</div>');
+    }
+    echo ('<input type="hidden" name="Total"  value="'.$Total.'"/> </div>');
 }
 
 if($Edit2){
-	echo('<input type="submit" class="btn btn-success" style="width:70px; margin-left:30px;" value="Submit">');
+    echo('<input type="submit" class="btn btn-success" value="Submit">');
 }
 
 echo ('</form></div>');
+
 $OUTPUT->footerStart();
 
 include("tool-footer.html");
 
 $OUTPUT->footerEnd();
-
-
-?>

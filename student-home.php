@@ -22,54 +22,35 @@ $OUTPUT->bodyStart();
 
 include("menu.php");
 
-echo ('
-<div style="margin-left:30px;">
-<h2>Quick Write</h2>');
+echo ('<div class="container">
+        <h2>Quick Write</h2>');
+
 $SetID = $_SESSION["SetID"];
 $questions = $QW_DAO->getQuestions($SetID);	
 $Total = count($questions);	
 
+if($Total == 0) {
+    echo ('<h4 style="margin:50px;">No question prompts have been created.</h3>');
+} else {
+    echo('<div>
+            <form method="post" action="actions/AddQ_Submit.php">');
 
-
-if($Total == 0){
-		
-	echo ('<h4 style="margin:50px;">No question prompts have been created.</h3>');
-	
-} else{
-
-	
-	
-		
-	
-	echo(' <div class="panel-body" style="margin:20px; "> 
-	<form method="post" action="actions/AddQ_Submit.php">');
-foreach ( $questions as $row ) {
-	
-	echo('
-	             
-			<b>'.$row["QNum"].'. '.$row["Question"].'</b><br><br>
-			<textarea class="form-control" name="A'.$row["QNum"].'" rows="3" autofocus style="width:70%;resize:none; margin-top:-7px;"></textarea>
-			<input type="hidden" name="Q'.$row["QNum"].'" value="'.$row["QID"].'"/>
-			<input type="hidden" name="Total" value="'.$Total.'"/>
-			
-			<br>
-		   
-		
-
-        '); 
-	 
- }
- echo('<input type="submit" class="btn btn-success" style="width:70px;" value="Submit">');
-echo ('</form></div>');
-	
+    foreach ( $questions as $row ) {
+        echo($row["QNum"].'. '.$row["Question"].'
+                <textarea class="form-control" name="A'.$row["QNum"].'" rows="3" autofocus></textarea>
+                <input type="hidden" name="Q'.$row["QNum"].'" value="'.$row["QID"].'"/>
+                <input type="hidden" name="Total" value="'.$Total.'"/>
+                ');
+    }
+        echo('<input type="submit" class="btn btn-success" value="Submit">
+            </form>
+          </div>');
 }
 
 echo ('</div>');
+
 $OUTPUT->footerStart();
 
 include("tool-footer.html");
 
 $OUTPUT->footerEnd();
-
-
-?>

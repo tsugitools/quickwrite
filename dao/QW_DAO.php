@@ -159,7 +159,7 @@ class QW_DAO {
 function checkStudent($context_id, $UserID){
 		$query = "SELECT * FROM {$this->p}qw_students WHERE context_id = :context_id AND UserID = :UserID";
         $arr = array(':context_id' => $context_id, ':UserID' => $UserID);        
-		return $result = $this->PDOX->rowDie($query, $arr);	
+		return $this->PDOX->rowDie($query, $arr);
 }
 
 

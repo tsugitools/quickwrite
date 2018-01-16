@@ -11,3 +11,7 @@ function confirmCopyKC()
 {
     return confirm("Are you sure you want to copy this to the current site?");
 }
+function confirmDelete()
+{
+    return confirm("Are you sure you want to delete? This action cannot be undone.");
+}

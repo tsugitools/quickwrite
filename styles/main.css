@@ -5,6 +5,9 @@
 h3 {
     font-size: 22px;
 }
+h2.tool-title {
+    margin-top: 0;
+}
 a.disabled, a.disabled:hover {
     cursor: not-allowed;
     pointer-events: none;
@@ -48,4 +51,18 @@ span.menu-with-icon {
 }
 .panel-body a:hover {
     text-decoration: none;
+}
+#checkmark {
+    float:right;
+    margin-right:calc(25% - 90px);
+    font-size:70px;
+    color:green;
+}
+
+#Btn01, #Btn02 {
+    float:right;
+    text-align:center;
+}
+#Btn01 > .btn.btn-default, #Btn02 > .btn.btn-default {
+    margin-bottom: 1em;
 }
