@@ -28,41 +28,50 @@ a.disabled, a.disabled:hover {
 div.row {
     margin-left: 0;
     margin-right: 0;
-	padding:0px;
-	
+	padding:0;
 }
-span.menu-with-icon {
-    padding-left: 2.2em;
+div.add-button {
+    margin-top: 1.5em;
 }
-.panel-heading.list-question > a.pull-right {
-    margin-top: 1em;
+#answerContainer .checkmark {
+    margin-right: 24px;
 }
-.panel-heading .deleteQuestion {
-    margin-left: 8px;
+#questionContainer .row {
+    margin: 1em 0;
 }
-.panel-heading h3 > a {
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+#questionContainer .question-text {
+    font-weight: bold;
 }
-.panel-success .panel-heading h3 > a {
-    color: #3c763d;
+#questionContainer .question-actions {
+    padding-right: 0;
 }
-.panel-body a:hover {
-    text-decoration: none;
+#answerContainer .answer-text {
+    border: 1px solid #ccc;
+    padding: .5em;
+    background: #efefef;
 }
-#checkmark {
-    float:right;
-    margin-right:calc(25% - 90px);
-    font-size:70px;
-    color:green;
+#answerContainer .answer-date {
+    margin-bottom: 1.5em;
 }
-
-#Btn01, #Btn02 {
-    float:right;
-    text-align:center;
+#answerContainer .question-text {
+    font-weight: 500;
+    margin: 10px 0;
+    font-size: 18px;
+    line-height: 1.1em;
 }
-#Btn01 > .btn.btn-default, #Btn02 > .btn.btn-default {
-    margin-bottom: 1em;
+div.answer-submit {
+    padding-top: 1.5em;
+}
+@media (max-width: 768px) {
+    #questionContainer .question-number, #answerContainer .question-number {
+        text-align: left;
+    }
+    #questionContainer .question-actions {
+        text-align: left;
+        padding-top: 1em;
+    }
+}
+.student-answers {
+    max-height: 600px;
+    overflow: auto;
 }

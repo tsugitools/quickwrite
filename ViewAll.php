@@ -25,8 +25,6 @@ include("menu.php");
 echo ('<div class="container">');
 
 echo('<div id="Btn02">
-        <a class="btn btn-default" href="instructor-home.php?Add=0" >Back to Main Page</a>
-        <br />
         <a href="actions/ExportToFile.php" id="Btn02_1">Export Results</a>
       </div>');
 

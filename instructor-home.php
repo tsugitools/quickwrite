@@ -25,142 +25,147 @@ include("menu.php");
 $SetID = $_SESSION["SetID"];
 
 $questions = $QW_DAO->getQuestions($SetID);
-$Total = count($questions);
+$totalQuestions = count($questions);
 
-$_SESSION["Next"] = $Total +1;
+$_SESSION["Next"] = $totalQuestions + 1;
 
-$numQuestionsMsg = $Total . " " . (($Total == 1) ? "question" : "questions") . " posted";
+$numQuestionsMsg = $totalQuestions . " " . (($totalQuestions == 1) ? "question" : "questions") . " posted";
 
-if (isset($_GET["QID"])) {
-    $QID = $_GET["QID"];
-} else {
-    $QID = 0;
-}
+echo ('<div class="container-fluid">');
 
-echo ('<div class="container">');
+echo('<div class="col-sm-offset-1"><h2 class="tool-title">Quick Write</h2></div>');
 
-echo('<div id="Btn01">
-        <a class="btn btn-default" href="ViewAll.php" >View All Results</a>
-        <br />
+echo('<div id="Btn01" class="pull-right">
         <span><em>'.$numQuestionsMsg.'</em></span>
         </div>');
 
-echo('<h2 class="tool-title">Quick Write</h2>');
+echo ('<div class="col-sm-offset-1"><p>Add questions to quickly collect feedback from your students.</p></div>');
 
-echo ('<p>Add questions to quickly collect feedback from your students.</p>');
+echo ('<div id="questionContainer">');
+foreach ($questions as $question ) {
 
-foreach ( $questions as $row ) {
+    $QID = $question['QID'];
 
-    $StudentNum = count($QW_DAO->ReportByQID($SetID, $row['QID']));
+    $answers = $QW_DAO->getAllAnswersToQuestion($SetID, $QID);
+    $numAnswers = count($answers);
+
+    // Question Row
+    echo('<div class="row">           
+            <div class="col-sm-2 text-right question-number">
+                <h4>'.$question["QNum"].'.</h4>
+            </div>
+            
+            <div class="col-sm-7 question-text">
+                <h4>'.$question["Question"].'</h4>
+            </div>
+            
+            <div class="col-sm-3 text-right question-actions">
+                <a href="#'.$QID.'"  class="btn btn-primary"  data-toggle="modal">Report ('.$numAnswers.') </a>
+                <a href="#Edit_'.$QID.'" class="btn btn-success" data-toggle="modal">Edit</a>
+                <a class="btn btn-danger" href="actions/Delete.php?QID='.$QID.'" onclick="return confirmDelete();">
+                    <span class="fa fa-trash"></span>
+                </a>
+            </div>
+          </div>');
+
     ?>
 
-    <div class="modal fade" id="<?php echo $row['QID']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Modal with student answers -->
+    <div class="modal fade" id="<?php echo $QID; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
 
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <?php echo ('<h3 id="qTitle">Question '.$row["QNum"].'</h3><h4>'.$row["Question"].'</h4>');?>
+                <div class="modal-header bg-primary ">
+                    <button type="button" class="close" data-dismiss="modal"><span class="fa fa-times bg-primary" aria-hidden="true"></span><span class="sr-only">Close</span></button>
+                    <?php echo ('<h3 id="qTitle">Question '.$question["QNum"].'</h3><h4>'.$question["Question"].'</h4>');?>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body student-answers">
                     <?php
 
-                    $QID = $row['QID'];
-                    $StudentList = $QW_DAO->ReportByQID($SetID, $QID);
+                    if ($numAnswers === 0) {
+                        echo("<h4 class='text-center'><em>No students have answered this question yet.</em></h4>");
+                    } else {
+                        foreach ( $answers as $answer ) {
+                            $UserID = $answer["UserID"];
 
-                    $rNum=0;
-                    foreach ( $StudentList as $row3 ) {
-                        $UserID = 	$row3["UserID"];
-                        $A="";
-                        $Data = $QW_DAO->Review($QID, $UserID);
+                            $displayName = $QW_DAO->findDisplayName($UserID);
 
-                        foreach ( $Data as $row2 ) {
-                            $A= $row2["Answer"];
-                            $Date1 = $row2["Modified"];
-                            if ($A != "") {
-                                $rNum++;
-                            }
-                        }
+                            $answerText = $answer["Answer"];
+                            $answerDate = new DateTime($answer["Modified"]);
 
-                        if($A !=""){
-                            echo('<div class="panel-body " style="border:1px solid gray;">
-                                    <div class="col-sm-2 noPadding">'.$row3["FirstName"].' '.$row3["LastName"].'</div>
-                                    <div class="col-sm-10 noPadding">' . $A .'</div>
-                                  </div>
-                                  ');
+                            $formattedDate = $answerDate->format("m-d-y")." at ".$answerDate->format("h:i A");
+
+                            echo('<div class="row">
+                                <div class="col-sm-3"><strong>'.$displayName.'</strong><br /><small>'.$formattedDate.'</small></div>
+                                <div class="col-sm-9">'.$answerText.'</div>
+                              </div>');
                         }
                     }
                     ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="Edit_<?php echo $row['QID']; ?>" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Edit Question Text Modal -->
+    <div class="modal fade" id="Edit_<?php echo $QID; ?>" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Edit Question Text</h4>
                 </div>
-                <div class="modal-body">
                 <?php
                 echo ('<form method="post" action="actions/AddQ_Submit.php">
-                        <input type="hidden" name="QID" value="'.$row["QID"].'"/>
-                        <input type="hidden" name="Flag" value="2"/>
-                        <textarea class="form-control" name="Question" rows="3" autofocus required>'.$row["Question"].'</textarea>
+                        <div class="modal-body">
+                            <input type="hidden" name="QID" value="'.$QID.'"/>
+                            <textarea class="form-control" name="Question" rows="4" autofocus required>'.$question["Question"].'</textarea>
                         </div>
                         <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-success" value="Save">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success" value="Save">
+                        </div>
                       </form>');
                 ?>
-                </div>
             </div>
         </div>
     </div>
 
     <?php
-
-    echo('<div class="row">           
-            <div class="col-sm-1 text-center" id="Btn04">
-                <h4>'.$row["QNum"].'</h4>
-            </div>
-            
-            <div class="col-sm-8">
-                <div>'.$row["Question"].'</div>
-            </div>
-            
-            <div class="col-sm-3" id="Btn03">
-                <a class="btn btn-danger pull-right" href="actions/Delete.php?QID='.$row["QID"].'" onclick="return confirmDelete();">
-                    <span class="fa fa-trash"></span>
-                </a>
-                <a href="#Edit_'.$row['QID'].'" class="btn btn-success" data-toggle="modal" >Edit </a>
-                <a href="#'.$row['QID'].'"  class="btn btn-primary"  data-toggle="modal">Report ('.$rNum.') </a>
-            </div>
-          </div>
-          ');
 }
+echo("</div>"); // End question container
 
-if($_GET["Add"]){
-    echo('<form method="post" action="actions/AddQ_Submit.php">
-            <div>
-                <div class="col-sm-1 noPadding text-center">
-                    <h4>'.$_SESSION["Next"].'</h4>
+// Add Question Modal
+?>
+
+    <div class="modal fade" id="addQuestion" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Question <?php echo($_SESSION["Next"]); ?></h4>
                 </div>
-                <div class="col-sm-8 noPadding">
-                    <textarea class="form-control" name="Question" id="Question" rows="3" autofocus required></textarea>
-                    <input type="hidden" name="QNum" value="'.$_SESSION["Next"].'"/>
-                    <input type="hidden" name="Flag" value="1"/>
-                </div>
-                <div class="col-sm-3 noPadding">
-                    <input type="submit" class="btn btn-success" value="Save" >
-                </div>
+                <?php
+                echo ('<form method="post" action="actions/AddQ_Submit.php">
+                        <div class="modal-body">
+                            <input type="hidden" name="QID" value="-1"/>
+                            <input type="hidden" name="QNum" value="'.$_SESSION["Next"].'"/>
+                            <textarea class="form-control" name="Question" id="questionText" rows="4" autofocus required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <input type="submit" class="btn btn-success" value="Save">
+                        </div>
+                      </form>');
+                ?>
             </div>
-          </form>
-          ');
-}
+        </div>
+    </div>
 
-echo ('<a class="btn btn-success" href="instructor-home.php?Add=1">Add Question</a>');
+<?php
+
+echo ('<div class="text-center add-button"><a class="btn btn-success" href="#addQuestion" data-toggle="modal"><span class="fa fa-plus" aria-hidden="true"></span> Add Question</a></div>');
 
 echo ('</div>'); // End container
 
@@ -168,4 +173,18 @@ $OUTPUT->footerStart();
 
 include("tool-footer.html");
 
+?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        // Clear any entered question text on modal hide
+        var addModal = $("#addQuestion");
+        addModal.on('hidden.bs.modal', function() {
+            $("#questionText").val('');
+        });
+        addModal.on('shown.bs.modal', function() {
+            $("#questionText").focus();
+        })
+    });
+</script>
+<?php
 $OUTPUT->footerEnd();
