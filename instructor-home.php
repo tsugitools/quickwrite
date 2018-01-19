@@ -33,13 +33,13 @@ $numQuestionsMsg = $totalQuestions . " " . (($totalQuestions == 1) ? "question" 
 
 echo ('<div class="container-fluid">');
 
-echo('<div class="col-sm-offset-1"><h2 class="tool-title">Quick Write</h2></div>');
+echo('<div><h2 class="tool-title">Quick Write</h2></div>');
 
 echo('<div id="Btn01" class="pull-right">
         <span><em>'.$numQuestionsMsg.'</em></span>
         </div>');
 
-echo ('<div class="col-sm-offset-1"><p>Add questions to quickly collect feedback from your students.</p></div>');
+echo ('<div><p>Add questions to quickly collect feedback from your students.</p></div>');
 
 echo ('<div id="questionContainer">');
 foreach ($questions as $question ) {
@@ -51,11 +51,11 @@ foreach ($questions as $question ) {
 
     // Question Row
     echo('<div class="row">           
-            <div class="col-sm-2 text-right question-number">
+            <div class="col-sm-1 text-right question-number">
                 <h4>'.$question["QNum"].'.</h4>
             </div>
             
-            <div class="col-sm-7 question-text">
+            <div class="col-sm-8 question-text">
                 <h4>'.$question["Question"].'</h4>
             </div>
             
@@ -165,7 +165,7 @@ echo("</div>"); // End question container
 
 <?php
 
-echo ('<div class="text-center add-button"><a class="btn btn-success" href="#addQuestion" data-toggle="modal"><span class="fa fa-plus" aria-hidden="true"></span> Add Question</a></div>');
+echo ('<div class="col-sm-8 col-sm-offset-1 add-button"><a class="btn btn-success" href="#addQuestion" data-toggle="modal"><span class="fa fa-plus" aria-hidden="true"></span> Add Question</a></div>');
 
 echo ('</div>'); // End container
 
