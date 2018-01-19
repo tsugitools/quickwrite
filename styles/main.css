@@ -8,6 +8,9 @@ h3 {
 h2.tool-title {
     margin-top: 0;
 }
+h4 {
+    line-height: 1.4em !important;
+}
 a.disabled, a.disabled:hover {
     cursor: not-allowed;
     pointer-events: none;
@@ -45,7 +48,7 @@ div.add-button {
 #questionContainer .question-actions {
     padding-right: 0;
 }
-#answerContainer .answer-text {
+#answerContainer .answer-text, #allResultsContainer .answer-text {
     border: 1px solid #ccc;
     padding: .5em;
     background: #efefef;
@@ -57,7 +60,7 @@ div.add-button {
     font-weight: 500;
     margin: 10px 0;
     font-size: 18px;
-    line-height: 1.1em;
+    line-height: 1.4em;
 }
 div.answer-submit {
     padding-top: 1.5em;
@@ -74,4 +77,15 @@ div.answer-submit {
 .student-answers {
     max-height: 600px;
     overflow: auto;
+}
+#allResultsContainer > .row {
+    border: 1px solid #ccc;
+    margin-bottom: 1.5em;
+    padding: 15px;
+}
+#allResultsContainer .question-number {
+    padding: .5em;
+}
+#allResultsContainer .answer-date {
+    margin-bottom: 1em;
 }

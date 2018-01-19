@@ -62,7 +62,7 @@ if($totalQuestions == 0) {
                     <div class="col-sm-8 question-text">'.$question["Question"].'</div>
                   </div>');
             echo('<div class="row">
-                    <div class="col-sm-8 col-sm-offset-2">
+                    <div class="col-sm-8 col-sm-offset-2 answer-date">
                         <textarea class="form-control" name="A'.$question["QNum"].'" rows="3" autofocus></textarea>');
             $moreToSubmit = true;
         } else {
@@ -92,7 +92,7 @@ if($totalQuestions == 0) {
     }
 
     if ($moreToSubmit) {
-        echo('<div class="row"><div class="col-sm-11 col-sm-offset-1 answer-submit"><input type="submit" class="btn btn-success" value="Submit"></div></div>');
+        echo('<div class="row"><div class="col-sm-10 col-sm-offset-2 answer-submit"><input type="submit" class="btn btn-success" value="Submit"></div></div>');
     }
 
     echo('</div>'); // End question container

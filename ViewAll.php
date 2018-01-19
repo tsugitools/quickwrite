@@ -3,8 +3,8 @@
 require_once('../config.php');
 require_once('dao/QW_DAO.php');
 
-use \Tsugi\Core\LTIX;
-use \QW\DAO\QW_DAO;
+use QW\DAO\QW_DAO;
+use Tsugi\Core\LTIX;
 
 // Retrieve the launch data if present
 $LAUNCH = LTIX::requireData();
@@ -24,63 +24,74 @@ include("menu.php");
 
 echo ('<div class="container">');
 
-echo('<div id="Btn02">
-        <a href="actions/ExportToFile.php" id="Btn02_1">Export Results</a>
+echo('<div class="pull-right">
+        <a href="actions/ExportToFile.php"><span class="fa fa-cloud-download" aria-hidden="true"></span> Export Results</a>
       </div>');
 
-echo('<h2 class="tool-title">Quick Write</h2>');
+echo('<h2 class="tool-title">All Submissions</h2>');
 
 $SetID = $_SESSION["SetID"];
-$StudentList = $QW_DAO->Report($SetID);
 
-if (count($StudentList)) {
-    echo ('<div>View All Results.</div>');
+$StudentList = $QW_DAO->getUsersWithAnswers($SetID);
+
+if (!$StudentList) {
+    echo ('<h4 class="text-center"><em>No students have answered yet.</em></h4>');
 }
 
-foreach ( $StudentList as $row ) {
-    echo('<div class="panel-body">
-            <div class="col-sm-3">'.$row["FirstName"].' '.$row["LastName"]);
+$questions = $QW_DAO->getQuestions($SetID);
 
-    $UserID = 	$row["UserID"];
-    $questions = $QW_DAO->getQuestions($SetID);
-    $Date1 = $QW_DAO->getUserData($SetID, $UserID);
-    $dateTime1 = new DateTime($Date1["Modified"]);
-    $formattedDate = $dateTime1->format("m-d-y")." at ".$dateTime1->format("h:i A");
+echo('<div id="allResultsContainer">');
 
-    echo('<br />
-            <span><em>'.$formattedDate.'</em></span>
-        </div>
-        <div class="col-sm-9 noPadding">
-        ');
+foreach ( $StudentList as $student ) {
 
-    echo('<table>');
+    $userId = $student['UserID'];
 
-    foreach ( $questions as $row1 ) {
+    $displayName = $QW_DAO->findDisplayName($userId);
 
-        $A="";
-        $QID = $row1["QID"];
+    $mostRecentDate = new DateTime($QW_DAO->getMostRecentAnswerDate($userId, $SetID));
 
-        $Data = $QW_DAO->Review($QID, $UserID);
+    $formattedDate = $mostRecentDate->format("m-d-y")." at ".$mostRecentDate->format("h:i A");
 
-        foreach ( $Data as $row2 ) {
-            $A= $row2["Answer"];
-            $Date1 = $row2["Modified"];
+    echo('<div class="row">
+            <div class="col-sm-3"><strong>'.$displayName.'</strong><br /><small>'.$formattedDate.'</small></div>
+            <div class="col-sm-9">');
+
+    foreach ( $questions as $question ) {
+
+        $QID = $question['QID'];
+
+        $answer = $QW_DAO->getStudentAnswerForQuestion($QID, $userId);
+
+        $formattedAnswerDate = '';
+        if ($answer) {
+            $answerDateTime = new DateTime($answer['Modified']);
+            $formattedAnswerDate = $answerDateTime->format("m-d-y") . " at " . $answerDateTime->format("h:i A");
         }
 
-        echo ('<tr>
-                  <td><strong>Question '.$row1["QNum"].'</strong></td>
-                  <td>'.$A.'</td>
-                </tr>
-              ');
+        echo('<div class="row">
+                  <div class="col-sm-2 question-number"><strong>Question '.$question['QNum'].'</strong></div>
+                  <div class="col-sm-10">
+                    <div class="answer-text">');
+
+                    if($answer && $answer['Answer'] !== '') {
+                        echo($answer['Answer']);
+                    } else {
+                        echo('<em>No response</em>');
+                    }
+
+                    echo('
+                    </div>
+                    <div class="answer-date text-right">
+                        <small><em>'.$formattedAnswerDate.'</em></small>
+                    </div>
+                  </div>
+              </div>');
     }
 
-    echo('</table>');
-
-    echo ('</div>
-        </div>');
+    echo('</div></div>'); // End column and row
 }
 
-echo ('</div>');
+echo ('</div></div>'); // End both containers
 
 $OUTPUT->footerStart();
 
