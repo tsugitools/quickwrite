@@ -11,19 +11,17 @@ $p = $CFG->dbprefix;
 
 $QW_DAO = new QW_DAO($PDOX, $p);
 
-if ( $USER->instructor ) {
-	$Question = str_replace("'", "&#39;", $_POST["Question"]);
+if ($USER->instructor) {
 
-	$QID = $_POST["QID"];
+    $questionId = $_POST["questionId"];
+    $questionText = $_POST["questionText"];
 
-	if ($QID > -1) {
+	if ($questionId > -1) {
 	    // Existing question
-	    $QW_DAO->updateQuestion($QID, $Question);
+	    $QW_DAO->updateQuestion($questionId, $questionText);
     } else {
 	    // New question
-        $QNum = $_POST["QNum"];
-        $SetID = $_SESSION["SetID"];
-        $QW_DAO->createQuestion($SetID, $QNum, $Question);
+        $QW_DAO->createQuestion($_SESSION["qw_id"], $questionText);
     }
 
     header( 'Location: '.addSession('../instructor-home.php') ) ;

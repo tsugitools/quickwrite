@@ -20,8 +20,6 @@ include("tool-header.html");
 
 $OUTPUT->bodyStart();
 
-include("menu.php");
-
 echo ('<div class="container">');
 
 echo('<div class="pull-right">
@@ -30,25 +28,25 @@ echo('<div class="pull-right">
 
 echo('<h2 class="tool-title">All Submissions</h2>');
 
-$SetID = $_SESSION["SetID"];
+$mainId = $_SESSION["qw_id"];
 
-$StudentList = $QW_DAO->getUsersWithAnswers($SetID);
+$StudentList = $QW_DAO->getUsersWithAnswers($mainId);
 
 if (!$StudentList) {
     echo ('<h4 class="text-center"><em>No students have answered yet.</em></h4>');
 }
 
-$questions = $QW_DAO->getQuestions($SetID);
+$questions = $QW_DAO->getQuestions($mainId);
 
 echo('<div id="allResultsContainer">');
 
 foreach ( $StudentList as $student ) {
 
-    $userId = $student['UserID'];
+    $userId = $student['user_id'];
 
     $displayName = $QW_DAO->findDisplayName($userId);
 
-    $mostRecentDate = new DateTime($QW_DAO->getMostRecentAnswerDate($userId, $SetID));
+    $mostRecentDate = new DateTime($QW_DAO->getMostRecentAnswerDate($userId, $mainId));
 
     $formattedDate = $mostRecentDate->format("m-d-y")." at ".$mostRecentDate->format("h:i A");
 
@@ -58,23 +56,23 @@ foreach ( $StudentList as $student ) {
 
     foreach ( $questions as $question ) {
 
-        $QID = $question['QID'];
+        $question_id = $question['question_id'];
 
-        $answer = $QW_DAO->getStudentAnswerForQuestion($QID, $userId);
+        $answer = $QW_DAO->getStudentAnswerForQuestion($question_id, $userId);
 
         $formattedAnswerDate = '';
         if ($answer) {
-            $answerDateTime = new DateTime($answer['Modified']);
+            $answerDateTime = new DateTime($answer['modified']);
             $formattedAnswerDate = $answerDateTime->format("m-d-y") . " at " . $answerDateTime->format("h:i A");
         }
 
         echo('<div class="row">
-                  <div class="col-sm-2 question-number"><strong>Question '.$question['QNum'].'</strong></div>
+                  <div class="col-sm-2 question-number"><strong>Question '.$question['question_num'].'</strong></div>
                   <div class="col-sm-10">
                     <div class="answer-text">');
 
-                    if($answer && $answer['Answer'] !== '') {
-                        echo($answer['Answer']);
+                    if($answer && $answer['answer_txt'] !== '') {
+                        echo($answer['answer_txt']);
                     } else {
                         echo('<em>No response</em>');
                     }
