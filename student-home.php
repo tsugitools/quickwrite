@@ -31,9 +31,9 @@ echo('<nav class="navbar navbar-default">
 echo ('<div class="container-fluid">
         <h2 class="tool-title col-sm-offset-1">Quick Write</h2>');
 
-$SetID = $_SESSION["SetID"];
+$SetID = $_SESSION["qw_id"];
 
-$questions = $QW_DAO->getQuestions($SetID);	
+$questions = $QW_DAO->getQuestions($SetID);
 $totalQuestions = count($questions);
 
 if($totalQuestions == 0) {
@@ -46,47 +46,47 @@ if($totalQuestions == 0) {
     $moreToSubmit = false;
     foreach ( $questions as $question ) {
         $answerText = "";
-        $QID = $question["QID"];
+        $QID = $question["question_id"];
         $answerId = -1;
 
         $answer = $QW_DAO->getStudentAnswerForQuestion($QID, $USER->id);
 
         if ($answer) {
-            $answerId = $answer['AnswerID'];
-            $answerText = $answer['Answer'];
+            $answerId = $answer['answer_id'];
+            $answerText = $answer['answer_txt'];
         }
 
         if (!$answer || $answerText == "") {
             echo('<div class="row">
-                    <div class="col-sm-2 text-right question-number"><h4>'.$question["QNum"].'.</h4></div>
-                    <div class="col-sm-8 question-text">'.$question["Question"].'</div>
+                    <div class="col-sm-2 text-right question-number"><h4>'.$question["question_num"].'.</h4></div>
+                    <div class="col-sm-8 question-text">'.$question["question_txt"].'</div>
                   </div>');
             echo('<div class="row">
                     <div class="col-sm-8 col-sm-offset-2 answer-date">
-                        <textarea class="form-control" name="A'.$question["QNum"].'" rows="3" autofocus></textarea>');
+                        <textarea class="form-control" name="A'.$question["question_num"].'" rows="3" autofocus></textarea>');
             $moreToSubmit = true;
         } else {
-            $dateTime = new DateTime($answer['Modified']);
+            $dateTime = new DateTime($answer['modified']);
             $formattedDate = $dateTime->format("m-d-y")." at ".$dateTime->format("h:i A");
 
             echo('<div class="row">
                     <div class="col-sm-2 text-right question-number">
-                      <h4><span class="fa fa-check fa-lg text-success checkmark"></span> '.$question["QNum"].'.</h4>
+                      <h4><span class="fa fa-check fa-lg text-success checkmark"></span> '.$question["question_num"].'.</h4>
                     </div>
-                    <div class="col-sm-8 question-text">'.$question["Question"].'</div>
+                    <div class="col-sm-8 question-text">'.$question["question_txt"].'</div>
                   </div>');
             echo('<div class="row">
                     <div class="col-sm-8 col-sm-offset-2">
                         <div class="answer-text">'.$answerText.'<br />
-                            <input type="hidden" name="A'.$question["QNum"].'" value="'.$answerText.'" />
+                            <input type="hidden" name="A'.$question["question_num"].'" value="'.$answerText.'" />
                         </div>
                         <div class="answer-date text-right">
                             <small><em>'.$formattedDate.'</em></small>
                         </div>');
         }
 
-        echo('<input type="hidden" name="QuestionID'.$question["QNum"].'" value="'.$QID.'"/>');
-        echo('<input type="hidden" name="AnswerID'.$question["QNum"].'" value="'.$answerId.'"/>');
+        echo('<input type="hidden" name="QuestionID'.$question["question_num"].'" value="'.$QID.'"/>');
+        echo('<input type="hidden" name="AnswerID'.$question["question_num"].'" value="'.$answerId.'"/>');
 
         echo('</div></div>'); // End last column and row
     }

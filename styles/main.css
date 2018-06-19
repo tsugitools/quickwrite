@@ -1,92 +1,57 @@
 /* Main CSS file */
-* {
-    border-radius: 0 !important;
-}
-h3 {
-    font-size: 22px;
-}
-h2.tool-title {
-    margin-top: 0;
-}
-h4 {
-    line-height: 1.4em !important;
-}
-a.disabled, a.disabled:hover {
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: .65;
-    box-shadow: none;
-	
-}
-.navbar {
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.2);
-}
-.navbar-header {
-    padding-right: 16px;
-    padding-left: 16px;
-}
-.navbar-nav .fa-stack {
-    position: absolute;
-}
-div.row {
-    margin-left: 0;
-    margin-right: 0;
-	padding:0;
-}
-div.add-button {
-    margin-top: 1em;
-}
-#answerContainer .checkmark {
-    margin-right: 24px;
-}
-#questionContainer .row {
-    margin: 1em 0;
-    border-top: 1px solid #ddd;
-}
-#questionContainer .question-text {
-    font-weight: bold;
-}
-#questionContainer .question-actions {
-    padding-top: 0.8em;
-}
-#answerContainer .answer-text, #allResultsContainer .answer-text {
-    border: 1px solid #ccc;
-    padding: .5em;
+body {
     background: #efefef;
 }
-#answerContainer .answer-date {
-    margin-bottom: 1.5em;
-}
-#answerContainer .question-text {
-    font-weight: 500;
-    margin: 10px 0;
-    font-size: 18px;
-    line-height: 1.4em;
-}
-div.answer-submit {
-    padding-top: 1.5em;
-}
-@media (max-width: 768px) {
-    #questionContainer .question-number, #answerContainer .question-number {
-        text-align: left;
-    }
-    #questionContainer .question-actions {
-        text-align: left;
-        padding-top: 1em;
-    }
-}
-.student-answers {
-    max-height: 600px;
-    overflow: auto;
-}
-#allResultsContainer > .row {
-    border: 1px solid #ccc;
-    margin-bottom: 1.5em;
-    padding: 15px;
-}
-#allResultsContainer .question-number {
-    padding: .5em;
-}
-#allResultsContainer .answer-date {
+#qwInfo {
+    line-height: 2.5em;
     margin-bottom: 1em;
+}
+#qwInfo p {
+    line-height: 1.5em;
+}
+#qwContentContainer {
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+}
+#viewAllChevron {
+    font-weight: lighter;
+}
+div.question-actions a {
+    color: #666666;
+    letter-spacing: 6px;
+}
+div.question-actions a:hover, div.question-actions a:active, div.question-actions a:focus {
+    text-decoration: none;
+}
+/* The side navigation menu */
+.side-nav {
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: -200px;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+.side-nav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #818181;
+    display: block;
+    transition: 0.2s;
+}
+.side-nav a:hover {
+    color: #f1f1f1;
+}
+.side-nav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 18px;
+    font-size: 24px;
+    margin-left: 50px;
+    font-weight: lighter;
 }

@@ -16,9 +16,9 @@ $QW_DAO = new QW_DAO($PDOX, $p);
 
 if ( $USER->instructor ) {
 
-    $SetID = $_SESSION["SetID"];
+    $qw_id = $_SESSION["qw_id"];
 
-    $questions = $QW_DAO->getQuestions($SetID);
+    $questions = $QW_DAO->getQuestions($qw_id);
 
     $rowCounter = 1;
 
@@ -47,7 +47,7 @@ if ( $USER->instructor ) {
         $exportFile->getActiveSheet()->getStyle($cell_name)->getFont()->setBold(true);
     }
 
-    $StudentList = $QW_DAO->getUsersWithAnswers($SetID);
+    $StudentList = $QW_DAO->getUsersWithAnswers($qw_id);
 
     $columnIterator = $exportFile->getActiveSheet()->getColumnIterator();
     $columnIterator->next();
@@ -55,12 +55,12 @@ if ( $USER->instructor ) {
     foreach ($StudentList as $student ) {
         $rowCounter++;
 
-        $UserID = $student["UserID"];
+        $UserID = $student["user_id"];
 
         $Email = $QW_DAO->findEmail($UserID);
         $UserName = explode("@",$Email);
 
-        $Modified1 = $QW_DAO->getMostRecentAnswerDate($UserID, $SetID);
+        $Modified1 = $QW_DAO->getMostRecentAnswerDate($UserID, $qw_id);
         $Modified  =  new DateTime($Modified1);
 
         $displayName = $QW_DAO->findDisplayName($UserID);
@@ -74,16 +74,14 @@ if ( $USER->instructor ) {
         $exportFile->getActiveSheet()->setCellValue('B'.$rowCounter, $UserName[0]);
         $exportFile->getActiveSheet()->setCellValue('C'.$rowCounter, $Modified->format('m/d/y - h:i A '));
 
-        $questions = $QW_DAO->getQuestions($SetID);
-        $QTotal = count($questions);
         $col = 3;
         foreach ($questions as $question ) {
-            $QID = $question["QID"];
+            $QID = $question["question_id"];
             $A="";
 
             $answer = $QW_DAO->getStudentAnswerForQuestion($QID, $UserID);
             if ($answer) {
-                $A = $answer["Answer"];
+                $A = $answer["answer_txt"];
                 $A = str_replace("&#39;", "'", $A);
             }
 
