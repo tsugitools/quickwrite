@@ -1,5 +1,5 @@
 body {
-    height: 100vh;
+    height: 99vh;
     background: -webkit-linear-gradient(50deg,#303f9f,#45cafc);
     background: -o-linear-gradient(50deg,#303f9f,#45cafc);
     background: linear-gradient(40deg,#303f9f,#45cafc);
@@ -21,15 +21,15 @@ body {
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
     #splashImage {
-        padding-top: 150px;
+        padding-top: 100px;
     }
     #splashMessage {
-        padding-top: 150px;
+        padding-top: 100px;
     }
 }
 div.toggle-container {
     position: absolute;
-    bottom: 0;
+    bottom: 50px;
     right: 10px;
 }
 div.checkbox {
