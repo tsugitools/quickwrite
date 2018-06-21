@@ -23,6 +23,25 @@ div.question-actions a {
 div.question-actions a:hover, div.question-actions a:active, div.question-actions a:focus {
     text-decoration: none;
 }
+#allResultsTable {
+    background: #fff;
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+}
+#allResultsTable small.date {
+    font-weight: normal;
+}
+#allResultsTable .question-col {
+    font-weight: bold;
+}
+.export-link {
+    font-size: 14px;
+    font-weight: lighter;
+    padding-top: 16px;
+}
+.student-name-header {
+    margin-top: 0;
+}
 /* The side navigation menu */
 .side-nav {
     height: 100%;
@@ -40,7 +59,7 @@ div.question-actions a:hover, div.question-actions a:active, div.question-action
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 16px;
-    color: #818181;
+    color: #919191;
     display: block;
     transition: 0.2s;
 }

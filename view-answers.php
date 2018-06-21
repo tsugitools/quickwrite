@@ -33,25 +33,38 @@ $answers = $QW_DAO->getAllAnswersToQuestion($question_id);
 $totalAnswers = count($answers);
 
 ?>
-
 <div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="instructor-home.php">Home</a></li>
+        <li class="active">Answers</li>
+    </ol>
+
     <div class="row">
         <div class="col-sm-10 col-sm-offset-1">
+            <h3>Answers (<?php echo($totalAnswers); ?>)</h3>
             <div class="list-group fadeInFast" id="qwContentContainer">
                 <div class="list-group-item">
-                    <h4>Answers (<?php echo($totalAnswers); ?>)</h4>
+                    <h4><?php echo($question["question_txt"]); ?></h4>
                 </div>
                 <?php
                 foreach ($answers as $answer) {
                     ?>
                     <div class="list-group-item">
                         <div class="row">
-                            <div class="col-xs-2">
-                                <h5>
-                                    <?php echo($QW_DAO->findDisplayName($answer["user_id"])); ?>
-                                </h5>
+                            <div class="col-sm-2">
+                                <p>
+                                    <strong><?php echo($QW_DAO->findDisplayName($answer["user_id"])); ?></strong>
+                                    <?php
+                                    $formattedAnswerDate = '';
+                                    if ($answer) {
+                                        $answerDateTime = new DateTime($answer['modified']);
+                                        $formattedAnswerDate = $answerDateTime->format("m-d-y") . " at " . $answerDateTime->format("h:i A");
+                                        echo('<br /><small>'.$formattedAnswerDate).'</small>';
+                                    }
+                                    ?>
+                                </p>
                             </div>
-                            <div class="col-xs-10">
+                            <div class="col-sm-10">
                                 <p>
                                     <?php echo($answer["answer_txt"]); ?>
                                 </p>
@@ -62,6 +75,7 @@ $totalAnswers = count($answers);
                 }
                 ?>
             </div>
+            <a href="instructor-home.php" class="btn btn-primary fadeInFast">Back</a>
         </div>
     </div>
 </div>
