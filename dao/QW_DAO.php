@@ -137,6 +137,12 @@ class QW_DAO {
         return $this->PDOX->allRowsDie($query, $arr);
     }
 
+    function getAnswerById($answer_id) {
+        $query = "SELECT * FROM {$this->p}qw_answer WHERE answer_id = :answerId;";
+        $arr = array(':answerId' => $answer_id);
+        return $this->PDOX->rowDie($query, $arr);
+    }
+
     function findEmail($user_id) {
         $query = "SELECT email FROM {$this->p}lti_user WHERE user_id = :user_id;";
         $arr = array(':user_id' => $user_id);
@@ -150,69 +156,4 @@ class QW_DAO {
         $context = $this->PDOX->rowDie($query, $arr);
         return $context["displayname"];
     }
-
-    ////
-
-
-
-
-
-    function getQuestionBySetAndNumber($SetID, $QNum) {
-        $query = "SELECT * FROM {$this->p}qw_questions WHERE QNum = :QNum AND SetID = :SetID;";
-        $arr = array(':QNum' => $QNum, ':SetID' => $SetID);
-        return $this->PDOX->rowDie($query, $arr);
-    }
-
-
-
-    function userDataExists($SetID, $userId) {
-        $query = "SELECT * FROM {$this->p}qw_answer WHERE SetID = :SetID AND UserID = :userId";
-        $arr = array(':SetID' => $SetID, ':userId' => $userId);
-        $result = $this->PDOX->rowDie($query, $arr);
-        return $result !== false;
-    }
-
-    function getAllAnswersForUser($SetID, $UserID) {
-        $query = "SELECT * FROM {$this->p}qw_answer WHERE SetID = :SetID AND UserID = :UserID";
-        $arr = array(':SetID' => $SetID, ':UserID' => $UserID);
-        return $this->PDOX->allRowsDie($query, $arr);
-    }
-
-
-    function getAnswerById($AnswerID) {
-        $query = "SELECT * FROM {$this->p}qw_answer WHERE AnswerID = :AnswerID;";
-        $arr = array(':AnswerID' => $AnswerID);
-        return $this->PDOX->rowDie($query, $arr);
-    }
-
-
-
-    function getUsersWithAnswersToQuestion($SetID, $QID) {
-        $query = "SELECT DISTINCT UserID FROM {$this->p}qw_answer WHERE SetID = :SetID AND QID = :QID and Answer != '';";
-        $arr = array(':SetID' => $SetID, ':QID' => $QID);
-        return $this->PDOX->allRowsDie($query, $arr);
-    }
-
-    function deleteAnswersToQuestion($QID) {
-        $query = "DELETE FROM {$this->p}qw_answer WHERE QID = :QID;";
-        $arr = array(':QID' => $QID);
-        $this->PDOX->queryDie($query, $arr);
-    }
-
-    function updateQNumber($QID, $QNum) {
-        $query = "UPDATE {$this->p}qw_questions set QNum = :QNum where QID = :QID;";
-        $arr = array(':QNum' =>$QNum, ':QID' => $QID);
-        $this->PDOX->queryDie($query, $arr);
-    }
-
-    function findUserID($user_key) {
-        $query = "SELECT user_id FROM {$this->p}lti_user WHERE user_key = :user_key;";
-        $arr = array(':user_key' => $user_key);
-        $context = $this->PDOX->rowDie($query, $arr);
-        return $context["user_id"];
-    }
-
-
-
-
 }

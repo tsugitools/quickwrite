@@ -31,7 +31,7 @@ function editQuestionText(questionId) {
     theForm.find('textarea[name="questionText"]').focus();
 }
 function cancelEditQuestionText(questionId) {
-    $("#questionText"+questionId).slideDown();
+    $("#questionText"+questionId).fadeIn(400);
     var theForm = $("#questionTextForm"+questionId);
     theForm.parent().find('.question-actions').show();
     theForm.parent().find('.question-answers').show();
