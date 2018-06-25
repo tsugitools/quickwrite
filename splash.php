@@ -29,13 +29,18 @@ $OUTPUT->bodyStart();
 
             <h1 class="fadeIn">Quick Write</h1>
 
-            <p class="fadeIn text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at ornare libero, vel tempor ligula. Nullam iaculis ut mi porttitor consequat. Quisque ultrices risus nisl, non pretium sapien aliquam in. Etiam mauris risus, lobortis lacinia finibus pulvinar, laoreet id metus. </p>
+            <p class="fadeIn text-justify">
+                Use this tool to add questions to collect feedback from students quickly. Instructors can create any number of questions to which they would like their students to respond.
+            </p>
+            <p class="fadeIn text-justify">
+                Students will be able to see all of the available questions and respond to each all at once or over several sessions. However, students will not be able to edit an answer to a question once it has been submitted.
+            </p>
 
             <div class="toggle-container fadeIn">
                 <div class="checkbox">
                     <input type="hidden" id="sess" value="<?php echo($_GET["PHPSESSID"]) ?>">
                     <label><input id="toggleSplash" type="checkbox" value="showsplash" <?php if(!$skipSplash) echo('checked="checked"'); ?>
-                                  onchange="toggleSkipSplash();"> Show this screen on startup</label>
+                                  onchange="toggleSkipSplash();"> Show this screen when using this tool for the first time.</label>
                 </div>
                 <span id="spinner" class="fa fa-spinner fa-pulse" style="display:none;"></span>
                 <span id="done" class="fa fa-check" style="display:none;"></span>

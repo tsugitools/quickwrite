@@ -18,6 +18,14 @@ $OUTPUT->header();
 
 include("tool-header.html");
 
+?>
+<style type="text/css">
+    body {
+        background: #efefef;
+    }
+</style>
+<?php
+
 $OUTPUT->bodyStart();
 
 $mainId = $_SESSION["qw_id"];
@@ -106,7 +114,7 @@ $StudentList = $QW_DAO->getUsersWithAnswers($mainId);
             <?php
             }
             ?>
-            <a href="instructor-home.php" class="btn btn-primary fadeInFast">Back</a>
+            <a href="instructor-home.php" class="btn btn-primary fadeInFast big-shadow">Back</a>
         </div>
     </div>
 </div>

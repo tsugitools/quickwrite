@@ -1,6 +1,7 @@
 /* Main CSS file */
 body {
-    background: #efefef;
+    background: #efefef url("../images/desk.png") no-repeat 50px 350px;
+    background-size: 50% auto;
 }
 #qwInfo {
     line-height: 2.5em;
@@ -41,6 +42,14 @@ div.question-actions a:hover, div.question-actions a:active, div.question-action
 }
 .student-name-header {
     margin-top: 0;
+}
+.big-shadow {
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+}
+.small-shadow {
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0,0,0,.2),0 3px 10px 0 rgba(0,0,0,.19);
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2),0 3px 10px 0 rgba(0,0,0,.19);
 }
 /* The side navigation menu */
 .side-nav {

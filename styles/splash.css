@@ -32,9 +32,6 @@ body {
 div.checkbox {
     display: inline-block;
 }
-input[type="checkbox"] {
-    margin-top: 0;
-}
 label {
     color: #fff;
 }
