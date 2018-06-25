@@ -19,18 +19,29 @@ if (!isset($_GET["question_id"])) {
 
 $question_id = $_GET["question_id"];
 
-// Start of the output
-$OUTPUT->header();
-
-include("tool-header.html");
-
-$OUTPUT->bodyStart();
-
 $question = $QW_DAO->getQuestionById($question_id);
 
 $answers = $QW_DAO->getAllAnswersToQuestion($question_id);
 
 $totalAnswers = count($answers);
+
+// Start of the output
+$OUTPUT->header();
+
+include("tool-header.html");
+
+if ($totalAnswers == 0) {
+?>
+<style type="text/css">
+    body {
+        background: #efefef url("images/crawling.png") no-repeat right 20px top 150px;
+        background-size: 40% auto;
+    }
+</style>
+<?php
+}
+
+$OUTPUT->bodyStart();
 
 ?>
 <div class="container-fluid">
@@ -75,7 +86,7 @@ $totalAnswers = count($answers);
                 }
                 ?>
             </div>
-            <a href="instructor-home.php" class="btn btn-primary fadeInFast">Back</a>
+            <a href="instructor-home.php" class="btn btn-primary big-shadow fadeInFast">Back</a>
         </div>
     </div>
 </div>

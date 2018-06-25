@@ -32,7 +32,7 @@ $moreToSubmit = false;
     <div class="row">
         <div class="col-sm-3 col-sm-offset-1" id="qwInfo">
             <h1>Quick Write</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur dolores fugit hic necessitatibus nostrum odit sit tempore temporibus ut vero?</p>
+            <p>Use the form below to respond to the question prompts in the list. You can respond to each question all at once or one at a time over multiple sessions. However, once you respond to a question you will not be able to edit or delete your answer.</p>
         </div>
         <div class="col-sm-7">
             <form method="post" action="actions/Answer_Submit.php">
@@ -85,7 +85,7 @@ $moreToSubmit = false;
                 <input type="hidden" name="Total" value="<?php echo($totalQuestions); ?>"/>
                 <?php
                 if ($moreToSubmit) {
-                    echo('<input type="submit" class="btn btn-success" value="Save">');
+                    echo('<input type="submit" class="btn btn-success big-shadow pull-right" value="Save Responses">');
                 }
                 ?>
             </form>

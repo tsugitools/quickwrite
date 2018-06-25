@@ -43,8 +43,8 @@ $totalQuestions = count($questions);
         <div class="row">
             <div class="col-sm-3 col-sm-offset-1" id="qwInfo">
                 <h1>Quick Write</h1>
-                <p>Add questions to quickly collect feedback from your students.</p>
-                <a href="#addOrEditQuestion" data-toggle="modal" class="btn btn-success"><span class="fa fa-plus"></span> Add Question</a>
+                <p>Use the button below to add a question to the list. Once a question has been created, you can make changes to the text or delete it and its answers.</p>
+                <a href="#addOrEditQuestion" data-toggle="modal" class="btn btn-success small-shadow"><span class="fa fa-plus"></span> Add Question</a>
             </div>
             <div class="col-sm-7">
                 <div class="list-group fadeInFast" id="qwContentContainer">
