@@ -16,12 +16,15 @@ if ($USER->instructor) {
     $questionId = $_POST["questionId"];
     $questionText = $_POST["questionText"];
 
+    $currentTime = new DateTime('now', new DateTimeZone($CFG->timezone));
+    $currentTime = $currentTime->format("Y-m-d H:i:s");
+
 	if ($questionId > -1) {
 	    // Existing question
-	    $QW_DAO->updateQuestion($questionId, $questionText);
+	    $QW_DAO->updateQuestion($questionId, $questionText, $currentTime);
     } else {
 	    // New question
-        $QW_DAO->createQuestion($_SESSION["qw_id"], $questionText);
+        $QW_DAO->createQuestion($_SESSION["qw_id"], $questionText, $currentTime);
     }
 
     header( 'Location: '.addSession('../instructor-home.php') ) ;

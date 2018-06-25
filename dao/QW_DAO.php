@@ -25,10 +25,10 @@ class QW_DAO {
         $this->PDOX->queryDie($query, $arr);
     }
 
-    function getOrCreateMain($user_id, $context_id, $link_id) {
+    function getOrCreateMain($user_id, $context_id, $link_id, $current_time) {
         $main_id = $this->getMainID($context_id, $link_id);
         if (!$main_id) {
-            return $this->createMain($user_id, $context_id, $link_id);
+            return $this->createMain($user_id, $context_id, $link_id, $current_time);
         } else {
             return $main_id;
         }
@@ -41,9 +41,9 @@ class QW_DAO {
         return $context["qw_id"];
     }
 
-    function createMain($user_id, $context_id, $link_id) {
-        $query = "INSERT INTO {$this->p}qw_main (user_id, context_id, link_id, modified) VALUES (:userId, :contextId, :linkId, now());";
-        $arr = array(':userId' => $user_id, ':contextId' => $context_id, ':linkId' => $link_id);
+    function createMain($user_id, $context_id, $link_id, $current_time) {
+        $query = "INSERT INTO {$this->p}qw_main (user_id, context_id, link_id, modified) VALUES (:userId, :contextId, :linkId, :currentTime);";
+        $arr = array(':userId' => $user_id, ':contextId' => $context_id, ':linkId' => $link_id, ':currentTime' => $current_time);
         $this->PDOX->queryDie($query, $arr);
         return $this->PDOX->lastInsertId();
     }
@@ -66,17 +66,17 @@ class QW_DAO {
         return $this->PDOX->rowDie($query, $arr);
     }
 
-    function createQuestion($qw_id, $question_text) {
+    function createQuestion($qw_id, $question_text, $current_time) {
         $nextNumber = $this->getNextQuestionNumber($qw_id);
-        $query = "INSERT INTO {$this->p}qw_question (qw_id, question_num, question_txt, modified) VALUES (:qwId, :questionNum, :questionText, now());";
-        $arr = array(':qwId' => $qw_id, ':questionNum' => $nextNumber, ':questionText' => $question_text);
+        $query = "INSERT INTO {$this->p}qw_question (qw_id, question_num, question_txt, modified) VALUES (:qwId, :questionNum, :questionText, :currentTime);";
+        $arr = array(':qwId' => $qw_id, ':questionNum' => $nextNumber, ':questionText' => $question_text, ':currentTime' => $current_time);
         $this->PDOX->queryDie($query, $arr);
         return $this->PDOX->lastInsertId();
     }
 
-    function updateQuestion($question_id, $question_text) {
-        $query = "UPDATE {$this->p}qw_question set question_txt = :questionText, modified = now() WHERE question_id = :questionId;";
-        $arr = array(':questionId' => $question_id, ':questionText' => $question_text);
+    function updateQuestion($question_id, $question_text, $current_time) {
+        $query = "UPDATE {$this->p}qw_question set question_txt = :questionText, modified = :currentTime WHERE question_id = :questionId;";
+        $arr = array(':questionId' => $question_id, ':questionText' => $question_text, ':currentTime' => $current_time);
         $this->PDOX->queryDie($query, $arr);
     }
 
@@ -99,6 +99,12 @@ class QW_DAO {
         $this->PDOX->queryDie($query, $arr);
     }
 
+    function fixUpQuestionNumbers($qw_id) {
+        $query = "SET @question_num = 0; UPDATE {$this->p}qw_question set question_num = (@question_num:=@question_num+1) WHERE qw_id = :qwId ORDER BY question_num";
+        $arr = array(':qwId' => $qw_id);
+        $this->PDOX->queryDie($query, $arr);
+    }
+
     function getUsersWithAnswers($qw_id) {
         $query = "SELECT DISTINCT user_id FROM {$this->p}qw_answer a join {$this->p}qw_question q on a.question_id = q.question_id WHERE q.qw_id = :qwId;";
         $arr = array(':qwId' => $qw_id);
@@ -118,16 +124,16 @@ class QW_DAO {
         return $context['modified'];
     }
 
-    function createAnswer($user_id, $question_id, $answer_txt, $date) {
-        $query = "INSERT INTO {$this->p}qw_answer (user_id, question_id, answer_txt, modified) VALUES (:userId, :questionId, :answerTxt, :modified);";
-        $arr = array(':userId' => $user_id,':questionId' => $question_id, ':answerTxt' => $answer_txt, ':modified' => $date);
+    function createAnswer($user_id, $question_id, $answer_txt, $current_time) {
+        $query = "INSERT INTO {$this->p}qw_answer (user_id, question_id, answer_txt, modified) VALUES (:userId, :questionId, :answerTxt, :currentTime);";
+        $arr = array(':userId' => $user_id,':questionId' => $question_id, ':answerTxt' => $answer_txt, ':currentTime' => $current_time);
         $this->PDOX->queryDie($query, $arr);
         return $this->PDOX->lastInsertId();
     }
 
-    function updateAnswer($answer_id, $answer_txt, $modified) {
-        $query = "UPDATE {$this->p}qw_answer set answer_txt = :answerTxt, modified = :modified where answer_id = :answerId;";
-        $arr = array(':answerId' => $answer_id, ':answerTxt' => $answer_txt, ':modified' => $modified);
+    function updateAnswer($answer_id, $answer_txt, $current_time) {
+        $query = "UPDATE {$this->p}qw_answer set answer_txt = :answerTxt, modified = :currentTime where answer_id = :answerId;";
+        $arr = array(':answerId' => $answer_id, ':answerTxt' => $answer_txt, ':currentTime' => $current_time);
         $this->PDOX->queryDie($query, $arr);
     }
 

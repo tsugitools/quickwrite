@@ -31,20 +31,21 @@ $OUTPUT->bodyStart();
 
             <p class="fadeIn text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at ornare libero, vel tempor ligula. Nullam iaculis ut mi porttitor consequat. Quisque ultrices risus nisl, non pretium sapien aliquam in. Etiam mauris risus, lobortis lacinia finibus pulvinar, laoreet id metus. </p>
 
+            <div class="toggle-container fadeIn">
+                <div class="checkbox">
+                    <input type="hidden" id="sess" value="<?php echo($_GET["PHPSESSID"]) ?>">
+                    <label><input id="toggleSplash" type="checkbox" value="showsplash" <?php if(!$skipSplash) echo('checked="checked"'); ?>
+                                  onchange="toggleSkipSplash();"> Show this screen on startup</label>
+                </div>
+                <span id="spinner" class="fa fa-spinner fa-pulse" style="display:none;"></span>
+                <span id="done" class="fa fa-check" style="display:none;"></span>
+            </div>
+
             <a href="instructor-home.php" class="fadeInUp btn btn-success">Get Started</a>
 
         </div>
         <div class="col-sm-5" id="splashImage">
             <img src="images/lisidore.png" width="100%" class="slideInRight">
-        </div>
-    </div>
-    <div class="toggle-container">
-        <span id="spinner" class="fa fa-spinner fa-pulse" style="display:none;"></span>
-        <span id="done" class="fa fa-check" style="display:none;"></span>
-        <div class="checkbox">
-            <input type="hidden" id="sess" value="<?php echo($_GET["PHPSESSID"]) ?>">
-            <label><input id="toggleSplash" type="checkbox" value="showsplash" <?php if(!$skipSplash) echo('checked="checked"'); ?>
-                          onchange="toggleSkipSplash();"> Show this screen on startup</label>
         </div>
     </div>
 </div>
