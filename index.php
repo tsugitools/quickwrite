@@ -12,9 +12,12 @@ $p = $CFG->dbprefix;
 
 $QW_DAO = new QW_DAO($PDOX, $p);
 
+$currentTime = new DateTime('now', new DateTimeZone($CFG->timezone));
+$currentTime = $currentTime->format("Y-m-d H:i:s");
+
 if ( $USER->instructor ) {
 
-    $_SESSION["qw_id"] = $QW_DAO->getOrCreateMain($USER->id, $CONTEXT->id, $LINK->id);
+    $_SESSION["qw_id"] = $QW_DAO->getOrCreateMain($USER->id, $CONTEXT->id, $LINK->id, $currentTime);
 
     $hasQuestions = $QW_DAO->getQuestions($_SESSION["qw_id"]);
 

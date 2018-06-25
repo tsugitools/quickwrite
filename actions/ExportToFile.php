@@ -2,7 +2,6 @@
 require_once "../../config.php";
 require_once "../util/PHPExcel.php";
 require_once "../dao/QW_DAO.php";
-require_once "../util/Utils.php";
 
 use \Tsugi\Core\LTIX;
 use \QW\DAO\QW_DAO;

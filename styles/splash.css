@@ -29,11 +29,6 @@ body {
         padding-top: 100px;
     }
 }
-div.toggle-container {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
 div.checkbox {
     display: inline-block;
 }

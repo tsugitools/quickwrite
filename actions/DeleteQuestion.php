@@ -18,5 +18,7 @@ if ( $USER->instructor && $question_id ) {
 
     $QW_DAO->deleteQuestion($question_id);
 
+    $QW_DAO->fixUpQuestionNumbers($_SESSION["qw_id"]);
+
     header( 'Location: '.addSession('../instructor-home.php') ) ;
 } 
