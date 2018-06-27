@@ -30,16 +30,13 @@ $OUTPUT->header();
 
 include("tool-header.html");
 
-if ($totalAnswers == 0) {
 ?>
-<style type="text/css">
-    body {
-        background: #efefef url("images/crawling.png") no-repeat right 20px top 150px;
-        background-size: 40% auto;
-    }
-</style>
+    <style type="text/css">
+        body {
+            background: #efefef;
+        }
+    </style>
 <?php
-}
 
 $OUTPUT->bodyStart();
 

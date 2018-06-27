@@ -14,6 +14,8 @@ $QW_DAO = new QW_DAO($PDOX, $p);
 
 $skipSplash = $QW_DAO->skipSplash($USER->id);
 
+$toolTitle = $QW_DAO->getMainTitle($_SESSION["qw_id"]);
+
 // Start of the output
 $OUTPUT->header();
 
@@ -24,8 +26,11 @@ $OUTPUT->bodyStart();
 ?>
 
 <div class="container-fluid">
+
+    <img src="images/lisidore-small.png" class="splash-img slideInRight">
+
     <div class="row">
-        <div class="col-sm-5 col-sm-offset-1" id="splashMessage">
+        <div class="col-sm-6 col-sm-offset-1" id="splashMessage">
 
             <h1 class="fadeIn">Quick Write</h1>
 
@@ -40,18 +45,23 @@ $OUTPUT->bodyStart();
                 <div class="checkbox">
                     <input type="hidden" id="sess" value="<?php echo($_GET["PHPSESSID"]) ?>">
                     <label><input id="toggleSplash" type="checkbox" value="showsplash" <?php if(!$skipSplash) echo('checked="checked"'); ?>
-                                  onchange="toggleSkipSplash();"> Show this screen when using this tool for the first time.</label>
+                                  onchange="toggleSkipSplash();"> Show this screen with every fresh install of this tool.</label>
                 </div>
                 <span id="spinner" class="fa fa-spinner fa-pulse" style="display:none;"></span>
                 <span id="done" class="fa fa-check" style="display:none;"></span>
             </div>
 
-            <a href="instructor-home.php" class="fadeInUp btn btn-success">Get Started</a>
-
         </div>
-        <div class="col-sm-5" id="splashImage">
-            <img src="images/lisidore.png" width="100%" class="slideInRight">
-        </div>
+    </div>
+    <div class="col-sm-5 col-sm-offset-1" id="createFormContainer">
+        <form method="post" action="actions/UpdateMainTitle.php" id="createForm" class="fadeInUp">
+            <h3>Create Quick Write</h3>
+            <div class="form-group">
+                <label for="toolTitle">Title</label>
+                <input type="text" class="form-control" id="toolTitle" name="toolTitle" placeholder="Quick Write" autofocus value="<?php echo($toolTitle); ?>">
+            </div>
+            <button type="submit" class="btn btn-primary">Get Started</button>
+        </form>
     </div>
 </div>
 

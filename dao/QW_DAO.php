@@ -48,6 +48,18 @@ class QW_DAO {
         return $this->PDOX->lastInsertId();
     }
 
+    function getMainTitle($qw_id) {
+        $query = "SELECT title FROM {$this->p}qw_main WHERE qw_id = :qwId";
+        $arr = array(':qwId' => $qw_id);
+        return $this->PDOX->rowDie($query, $arr)["title"];
+    }
+
+    function updateMainTitle($qw_id, $title, $current_time) {
+        $query = "UPDATE {$this->p}qw_main set title = :title, modified = :currentTime WHERE qw_id = :qwId;";
+        $arr = array(':title' => $title, ':currentTime' => $current_time, ':qwId' => $qw_id);
+        $this->PDOX->queryDie($query, $arr);
+    }
+
     function deleteMain($qw_id, $user_id) {
         $query = "DELETE FROM {$this->p}qw_main WHERE qw_id = :mainId AND user_id = :userId";
         $arr = array(':mainId' => $qw_id, ':userId' => $user_id);

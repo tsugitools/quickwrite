@@ -20,6 +20,12 @@ include("tool-header.html");
 
 $OUTPUT->bodyStart();
 
+$toolTitle = $QW_DAO->getMainTitle($_SESSION["qw_id"]);
+
+if (!$toolTitle) {
+    $toolTitle = "Quick Write";
+}
+
 $questions = $QW_DAO->getQuestions($_SESSION["qw_id"]);
 
 $totalQuestions = count($questions);
@@ -28,13 +34,15 @@ $totalQuestions = count($questions);
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><span class="fa fa-times"></span></a>
     <a href="splash.php"><span class="fa fa-fw fa-pencil-square" aria-hidden="true"></span> Getting Started</a>
     <a href="actions/ExportToFile.php"><span class="fa fa-fw fa-cloud-download" aria-hidden="true"></span> Export Results</a>
+    <a href="javascript:void(0);" id="editTitleLink"><span class="fa fa-fw fa-pencil" aria-hidden="true"></span> Edit Tool Title</a>
+    <a href="import-questions.php"><span class="fa fa-fw fa-upload" aria-hidden="true"></span> Import Questions</a>
     <a href="actions/DeleteAll.php" onclick="return confirmResetTool();"><span class="fa fa-fw fa-trash" aria-hidden="true"></span> Reset Tool</a>
 </div>
 
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="javascript:void(0);" onclick="openSideNav();"><span class="fa fa-bars"></span> Quick Write</a>
+                <a class="navbar-brand" href="javascript:void(0);" onclick="openSideNav();"><span class="fa fa-bars"></span> Menu</a>
             </div>
         </div>
     </nav>
@@ -42,7 +50,8 @@ $totalQuestions = count($questions);
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-sm-offset-1" id="qwInfo">
-                <h1>Quick Write</h1>
+                <input type="hidden" id="sess" value="<?php echo($_GET["PHPSESSID"]) ?>">
+                <h1 contenteditable="true" id="toolTitle"><?php echo($toolTitle); ?></h1>
                 <p>Use the button below to add a question to the list. Once a question has been created, you can make changes to the text or delete it and its answers.</p>
                 <a href="#addOrEditQuestion" data-toggle="modal" class="btn btn-success small-shadow"><span class="fa fa-plus"></span> Add Question</a>
             </div>
