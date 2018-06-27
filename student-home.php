@@ -38,11 +38,11 @@ $moreToSubmit = false;
     <div class="row">
         <div class="col-sm-3 col-sm-offset-1" id="qwInfo">
             <h1><?php echo($toolTitle); ?></h1>
-            <p>Use the form below to respond to the question prompts in the list. You can respond to each question all at once or one at a time over multiple sessions. However, once you respond to a question you will not be able to edit or delete your answer.</p>
+            <p>Use the form to respond to the question prompts in the list. You can respond to each question all at once or one at a time over multiple sessions. However, once you respond to a question you will not be able to edit or delete your answer.</p>
         </div>
         <div class="col-sm-7">
             <form method="post" action="actions/Answer_Submit.php">
-                <div class="list-group fadeInFast" id="qwContentContainer">
+                <div class="list-group fadeInFast student-container" id="qwContentContainer">
                     <?php
                     if ($totalQuestions == 0) {
                         echo ('<h4 class="alert alert-info text-center">No question prompts have been created.</h4>');
@@ -76,7 +76,7 @@ $moreToSubmit = false;
                                 $formattedDate = $dateTime->format("m-d-y")." at ".$dateTime->format("h:i A");
 
                                 echo($answerText.'
-                                    <div class="text-right text-muted">'.$formattedDate.'</div>
+                                    <div class="text-right text-muted"><span aria-hidden="true" class="fa fa-check text-success"></span> '.$formattedDate.'</div>
                                     <input type="hidden" name="A'.$question["question_num"].'" value="'.$answerText.'" />');
                             }
                             echo ('</p>');
