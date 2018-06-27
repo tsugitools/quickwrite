@@ -35,7 +35,7 @@ $totalQuestions = count($questions);
     <a href="splash.php"><span class="fa fa-fw fa-pencil-square" aria-hidden="true"></span> Getting Started</a>
     <a href="actions/ExportToFile.php"><span class="fa fa-fw fa-cloud-download" aria-hidden="true"></span> Export Results</a>
     <a href="javascript:void(0);" id="editTitleLink"><span class="fa fa-fw fa-pencil" aria-hidden="true"></span> Edit Tool Title</a>
-    <a href="import-questions.php"><span class="fa fa-fw fa-upload" aria-hidden="true"></span> Import Questions</a>
+    <a href="import-questions.php" class="disabled"><span class="fa fa-fw fa-upload" aria-hidden="true"></span> Import Questions</a>
     <a href="actions/DeleteAll.php" onclick="return confirmResetTool();"><span class="fa fa-fw fa-trash" aria-hidden="true"></span> Reset Tool</a>
 </div>
 

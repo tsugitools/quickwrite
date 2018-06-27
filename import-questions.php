@@ -14,7 +14,7 @@ $QW_DAO = new QW_DAO($PDOX, $p);
 
 if ( $USER->instructor ) {
 
-    echo('Import <a href="instructor-home.php">Back</a>');
+    echo('Import questions coming soon. <a href="instructor-home.php">Back</a>');
 
 } else { // student
 
