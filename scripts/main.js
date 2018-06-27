@@ -7,8 +7,33 @@ $(document).ready(function(){
     });
     addModal.on('shown.bs.modal', function() {
         $("#questionText").focus();
-    })
+    });
+
+    $("#editTitleLink").on("click", function() {
+        closeNav();
+        $("#toolTitle").focus();
+    });
+
+    $("#toolTitle").on("blur", function() {
+        saveTitle();
+    }).on("keypress", function(e) {
+        if(e.which === 13) {
+            this.blur();
+        }
+    });
 });
+function saveTitle() {
+    var sessionId = $("#sess").val();
+    var titleText = $("#toolTitle").text();
+    $.ajax({
+        type: "post",
+        url: "actions/UpdateMainTitle.php?PHPSESSID="+sessionId,
+        data: {
+            "toolTitle" : titleText,
+            "nonav" : true
+        }
+    });
+}
 function confirmDeleteQuestion() {
     return confirm("Are you sure you want to delete this question? This action cannot be undone.");
 }

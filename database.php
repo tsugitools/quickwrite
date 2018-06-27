@@ -17,9 +17,10 @@ $DATABASE_INSTALL = array(
     array( "{$CFG->dbprefix}qw_main",
         "create table {$CFG->dbprefix}qw_main (
     qw_id       INTEGER NOT NULL AUTO_INCREMENT,
-    user_id     INTEGER NULL,
-    context_id  INTEGER NULL,
-	link_id     INTEGER NULL,
+    user_id     INTEGER NOT NULL,
+    context_id  INTEGER NOT NULL,
+	link_id     INTEGER NOT NULL,
+	title       VARCHAR(255) NULL,
     modified    datetime NULL,
     
     PRIMARY KEY(qw_id)

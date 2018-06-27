@@ -1,7 +1,12 @@
 /* Main CSS file */
 body {
-    background: #efefef url("../images/desk.png") no-repeat 50px 350px;
-    background-size: 50% auto;
+    background: #efefef;
+}
+@media only screen and (min-width : 768px) {
+    body {
+        background: #efefef url("../images/desk-small.png") no-repeat 50px 350px;
+        background-size: 50% auto;
+    }
 }
 #qwInfo {
     line-height: 2.5em;
@@ -50,6 +55,9 @@ div.question-actions a:hover, div.question-actions a:active, div.question-action
 .small-shadow {
     -webkit-box-shadow: 0 4px 8px 0 rgba(0,0,0,.2),0 3px 10px 0 rgba(0,0,0,.19);
     box-shadow: 0 4px 8px 0 rgba(0,0,0,.2),0 3px 10px 0 rgba(0,0,0,.19);
+}
+#toolTitle {
+    line-height: 42px;
 }
 /* The side navigation menu */
 .side-nav {

@@ -22,6 +22,12 @@ $OUTPUT->bodyStart();
 
 $SetID = $_SESSION["qw_id"];
 
+$toolTitle = $QW_DAO->getMainTitle($_SESSION["qw_id"]);
+
+if (!$toolTitle) {
+    $toolTitle = "Quick Write";
+}
+
 $questions = $QW_DAO->getQuestions($SetID);
 $totalQuestions = count($questions);
 
@@ -31,7 +37,7 @@ $moreToSubmit = false;
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-sm-offset-1" id="qwInfo">
-            <h1>Quick Write</h1>
+            <h1><?php echo($toolTitle); ?></h1>
             <p>Use the form below to respond to the question prompts in the list. You can respond to each question all at once or one at a time over multiple sessions. However, once you respond to a question you will not be able to edit or delete your answer.</p>
         </div>
         <div class="col-sm-7">
@@ -94,7 +100,5 @@ $moreToSubmit = false;
 </div>
 <?php
 $OUTPUT->footerStart();
-
-include("tool-footer.html");
 
 $OUTPUT->footerEnd();
