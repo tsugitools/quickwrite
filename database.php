@@ -9,7 +9,7 @@ $DATABASE_UNINSTALL = array(
 $DATABASE_INSTALL = array(
     array( "{$CFG->dbprefix}qw_splash",
         "create table {$CFG->dbprefix}qw_splash (
-    user_id       INTEGER NULL,
+    user_id       INTEGER NOT NULL DEFAULT 0,
     skip_splash   BOOL NOT NULL DEFAULT 0,
     PRIMARY KEY(user_id)
 	
