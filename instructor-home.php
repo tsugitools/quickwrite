@@ -28,15 +28,13 @@ if (!$toolTitle) {
 
 $questions = $QW_DAO->getQuestions($_SESSION["qw_id"]);
 
-$totalQuestions = count($questions);
-
 include("menu.php");
 
 $OUTPUT->flashMessages();
 
 ?>
     <div class="container">
-        <h1 id="toolTitle" class="flx-cntnr">
+        <h1 id="toolTitle" class="flx-cntnr flx-row flx-nowrap flx-start">
             <span class="title-text-span"><?=$toolTitle?></span>
             <a id="toolTitleEditLink" class="toolTitleAction" href="javascript:void(0);" onclick="editTitleText()">
                 <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
@@ -45,8 +43,8 @@ $OUTPUT->flashMessages();
         </h1>
         <form id="toolTitleForm" action="actions/UpdateMainTitle.php" method="post" style="display:none;">
                 <label for="toolTitleInput" class="sr-only">Title Text</label>
-                <div class="h1 flx-cntnr">
-                    <input type="text" class="title-edit-input" id="toolTitleInput" name="toolTitle" rows="2" required value="<?=$toolTitle?>">
+                <div class="h1 flx-cntnr flx-row flx-nowrap flx-start">
+                    <textarea class="title-edit-input flx-grow-all" id="toolTitleInput" name="toolTitle" rows="2"><?=$toolTitle?></textarea>
                     <a id="toolTitleSaveLink" class="toolTitleAction" href="javascript:void(0);">
                         <span class="fa fa-fw fa-save" aria-hidden="true"></span>
                         <span class="sr-only">Save Title Text</span>
