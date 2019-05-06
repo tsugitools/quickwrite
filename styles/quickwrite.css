@@ -2,7 +2,7 @@
 .question-text {
     padding: 0 14px;
 }
-.question-row > a {
+.question-row > a, .toolTitleAction {
     padding: 0 4px;
     font-weight: normal;
     color: #C4C4C4;
@@ -10,9 +10,23 @@
 .question-row > a:last-child {
     padding: 0 0 0 4px;
 }
-.question-row > a:hover, .question-row > a:focus, .question-row > a:active {
+.question-row > a:hover,
+.question-row > a:focus,
+.question-row > a:active,
+.toolTitleAction:hover,
+.toolTitleAction:focus,
+.toolTitleAction:active {
     color: #1066EB;
 }
 .question-text-span:hover {
     background-color: #BEDCFE;
+}
+.title-edit-input,
+.title-text-span {
+    margin-right: 14px;
+}
+.toolTitleAction,
+.toolTitleAction,
+.toolTitleAction {
+    font-size: 24px;
 }

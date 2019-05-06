@@ -82,3 +82,28 @@ function editQuestionText(questionId) {
             }
         });
 }
+function editTitleText() {
+    $("#toolTitle").hide();
+    var titleForm = $("#toolTitleForm");
+    titleForm.show();
+    titleForm.find("#toolTitleInput").focus()
+        .off("keypress").on("keypress", function(e) {
+        if(e.which === 13) {
+            e.preventDefault();
+            titleForm.submit();
+        }
+    });
+    $("#toolTitleSaveLink").show()
+        .off("click").on("click", function(e) {
+            titleForm.submit();
+        });
+    $("#toolTitleCancelLink").show()
+        .off("click").on("click", function(e) {
+            var titleText = $("#toolTitle");
+            titleText.show();
+            titleForm.hide();
+            $("#toolTitleInput").val($(".title-text-span").text());
+            $("#toolTitleCancelLink").hide();
+            $("#toolTitleSaveLink").hide();
+        });
+}
