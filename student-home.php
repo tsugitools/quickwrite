@@ -33,6 +33,8 @@ $totalQuestions = count($questions);
 
 $moreToSubmit = false;
 
+include("menu.php");
+
 ?>
 <div class="container-fluid">
     <div class="row">

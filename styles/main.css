@@ -1,103 +1,120 @@
-/* Main CSS file */
+/* START UD CUSTOM COMPONENTS */
 body {
-    background: #efefef;
+    padding: 63px 0 0;
+    margin: 0;
+    font-family: 'Muli', sans-serif;
 }
-@media only screen and (min-width : 768px) {
-    body {
-        background: #efefef url("../images/desk-small.png") no-repeat 50px 350px;
-        background-size: 50% auto;
-    }
+h1, .h1 {
+    font-weight: 900;
+    font-size: 50px;
+    margin-top: 50px;
+    margin-bottom: 25px;
 }
-#qwInfo {
-    line-height: 2.5em;
-    margin-bottom: 1em;
+h2, .h2 {
+    font-weight: 900;
+    font-size: 36px;
+    margin-top: 36px;
+    margin-bottom: 18px;
 }
-#qwInfo p {
+h3, .h3 {
+    font-weight: 900;
+    font-size: 24px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+h4, .h4 {
+    font-weight: 900;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+h1.inline, .h1.inline,
+h2.inline, .h2.inline,
+h3.inline, .h3.inline,
+h4.inline, .h4.inline {
+    font-weight: normal;
     line-height: 1.5em;
 }
-#qwContentContainer {
-    -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
-    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+.navbar {
+    margin-bottom: 0;
 }
-.student-container {
-    border-top: 5px solid #357ebd;
+.navbar-fixed-top {
+    height: 62px;
 }
-#viewAllChevron {
-    font-weight: lighter;
+.navbar-header {
+    padding-top: 4px;
 }
-div.question-actions a {
-    color: #666666;
-    letter-spacing: 6px;
+.navbar-default {
+    border: none;
+    border-radius: 0;
 }
-div.question-actions a:hover, div.question-actions a:active, div.question-actions a:focus {
-    text-decoration: none;
+.navbar-default .nav > li {
+    font-size: 18px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding: 0 6px;
 }
-#allResultsTable {
-    background: #fff;
-    -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
-    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+.navbar-default .nav > li > a {
+    border-bottom: 2px solid transparent;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
 }
-#allResultsTable small.date {
-    font-weight: normal;
+.navbar-default .navbar-brand,
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    font-size: 28px;
+    opacity: 1;
 }
-#allResultsTable .question-col {
-    font-weight: bold;
+.nav > li:hover > a,
+.nav > li:focus > a,
+.nav > li.active > a,
+.nav > li.active:hover > a,
+.nav > li.active:focus > a {
+    border-bottom-color: #ffffff;
+    opacity: 1;
 }
-.export-link {
-    font-size: 14px;
-    font-weight: lighter;
-    padding-top: 16px;
+.flx-cntnr {
+    display: flex;
+    position: relative;
 }
-.student-name-header {
-    margin-top: 0;
+.flx-cntnr > * {
 }
-.big-shadow {
-    -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
-    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2),0 6px 20px 0 rgba(0,0,0,.19);
+.flx-row {
+    flex-direction: row;
 }
-.small-shadow {
-    -webkit-box-shadow: 0 4px 8px 0 rgba(0,0,0,.2),0 3px 10px 0 rgba(0,0,0,.19);
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2),0 3px 10px 0 rgba(0,0,0,.19);
+.flx-nowrap {
+    flex-wrap: nowrap;
 }
-#toolTitle {
-    line-height: 42px;
+.flx-start {
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-start;
 }
-a.disabled, a.disabled:hover, a.disabled:focus, a.disabled:active {
-    cursor: not-allowed;
-    text-decoration: none;
-    pointer-events: none;
-    font-style: italic;
-    opacity: 0.6;
+.flx-grow-all {
+    flex-grow: 1;
 }
-/* The side navigation menu */
-.side-nav {
-    height: 100%;
-    width: 200px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: -200px;
-    background-color: #111;
-    overflow-x: hidden;
-    padding-top: 60px;
-    transition: 0.5s;
-}
-.side-nav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 16px;
-    color: #919191;
-    display: block;
-    transition: 0.2s;
-}
-.side-nav a:hover {
-    color: #f1f1f1;
-}
-.side-nav .closebtn {
+.alert-banner {
     position: absolute;
-    top: 0;
-    right: 18px;
-    font-size: 24px;
-    margin-left: 50px;
-    font-weight: lighter;
+    left: 0;
+    top: 60px;
+    width: 100%;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    font-size: 16px;
+    padding-top: 12px;
+    padding-bottom: 10px;
+}
+.alert-banner > .container > .close {
+    margin-right: 8px;
+}
+.splash-container {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.splash-content {
+    text-align: center;
 }

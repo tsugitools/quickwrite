@@ -12,15 +12,11 @@ $p = $CFG->dbprefix;
 
 $QW_DAO = new QW_DAO($PDOX, $p);
 
-$question_id = isset($_GET["question_id"]) ? $_GET["question_id"] : false;
+if ( $USER->instructor ) {
 
-if ( $USER->instructor && $question_id ) {
-
-    $QW_DAO->deleteQuestion($question_id);
-
-    $QW_DAO->fixUpQuestionNumbers($_SESSION["qw_id"]);
-
-    $_SESSION['success'] = "Question Deleted.";
+    $QW_DAO->markAsSeen($_SESSION["qw_id"]);
 
     header( 'Location: '.addSession('../instructor-home.php') ) ;
-} 
+} else {
+    header( 'Location: '.addSession('../student-home.php') ) ;
+}

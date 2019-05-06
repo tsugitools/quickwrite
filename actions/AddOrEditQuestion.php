@@ -19,12 +19,23 @@ if ($USER->instructor) {
     $currentTime = new DateTime('now', new DateTimeZone($CFG->timezone));
     $currentTime = $currentTime->format("Y-m-d H:i:s");
 
-	if ($questionId > -1) {
-	    // Existing question
-	    $QW_DAO->updateQuestion($questionId, $questionText, $currentTime);
+    if ($questionText && $questionText != '' && $questionText != null) {
+        if ($questionId > -1) {
+            // Existing question
+            $QW_DAO->updateQuestion($questionId, $questionText, $currentTime);
+        } else {
+            // New question
+            $QW_DAO->createQuestion($_SESSION["qw_id"], $questionText, $currentTime);
+        }
+        $_SESSION['success'] = 'Question Saved.';
     } else {
-	    // New question
-        $QW_DAO->createQuestion($_SESSION["qw_id"], $questionText, $currentTime);
+        if ($questionId > -1) {
+            // Blank text means delete question
+            $QW_DAO->deleteQuestion($questionId);
+            $_SESSION['success'] = 'Question Deleted.';
+        } else {
+            $_SESSION['error'] = 'Unable to save blank question.';
+        }
     }
 
     header( 'Location: '.addSession('../instructor-home.php') ) ;

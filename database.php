@@ -7,13 +7,6 @@ $DATABASE_UNINSTALL = array(
 
 // The SQL to create the tables if they don't exist
 $DATABASE_INSTALL = array(
-    array( "{$CFG->dbprefix}qw_splash",
-        "create table {$CFG->dbprefix}qw_splash (
-    user_id       INTEGER NOT NULL DEFAULT 0,
-    skip_splash   BOOL NOT NULL DEFAULT 0,
-    PRIMARY KEY(user_id)
-	
-) ENGINE = InnoDB DEFAULT CHARSET=utf8"),
     array( "{$CFG->dbprefix}qw_main",
         "create table {$CFG->dbprefix}qw_main (
     qw_id       INTEGER NOT NULL AUTO_INCREMENT,
@@ -21,6 +14,7 @@ $DATABASE_INSTALL = array(
     context_id  INTEGER NOT NULL,
 	link_id     INTEGER NOT NULL,
 	title       VARCHAR(255) NULL,
+	seen_splash BOOL NOT NULL DEFAULT 0,
     modified    datetime NULL,
     
     PRIMARY KEY(qw_id)

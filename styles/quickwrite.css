@@ -1,0 +1,18 @@
+/* Quick Write Specific */
+.question-text {
+    padding: 0 14px;
+}
+.question-row > a {
+    padding: 0 4px;
+    font-weight: normal;
+    color: #C4C4C4;
+}
+.question-row > a:last-child {
+    padding: 0 0 0 4px;
+}
+.question-row > a:hover, .question-row > a:focus, .question-row > a:active {
+    color: #1066EB;
+}
+.question-text-span:hover {
+    background-color: #BEDCFE;
+}

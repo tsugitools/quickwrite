@@ -11,20 +11,6 @@ class QW_DAO {
         $this->p = $p;
     }
 
-    function skipSplash($user_id) {
-        $query = "SELECT skip_splash FROM {$this->p}qw_splash WHERE user_id = :userId";
-        $arr = array(':userId' => $user_id);
-        $context = $this->PDOX->rowDie($query, $arr);
-        return $context["skip_splash"];
-    }
-
-    function toggleSkipSplash($user_id) {
-        $skip = $this->skipSplash($user_id) ? 0 : 1;
-        $query = "INSERT INTO {$this->p}qw_splash (user_id, skip_splash) VALUES (:userId, ".$skip.") ON DUPLICATE KEY UPDATE skip_splash = ".$skip;
-        $arr = array(':userId' => $user_id);
-        $this->PDOX->queryDie($query, $arr);
-    }
-
     function getOrCreateMain($user_id, $context_id, $link_id, $current_time) {
         $main_id = $this->getMainID($context_id, $link_id);
         if (!$main_id) {
@@ -46,6 +32,18 @@ class QW_DAO {
         $arr = array(':userId' => $user_id, ':contextId' => $context_id, ':linkId' => $link_id, ':currentTime' => $current_time);
         $this->PDOX->queryDie($query, $arr);
         return $this->PDOX->lastInsertId();
+    }
+
+    function hasSeenSplash($qw_id) {
+        $query = "SELECT seen_splash FROM {$this->p}qw_main WHERE qw_id = :qwId";
+        $arr = array(':qwId' => $qw_id);
+        return $this->PDOX->rowDie($query, $arr)["seen_splash"];
+    }
+
+    function markAsSeen($qw_id) {
+        $query = "UPDATE {$this->p}qw_main set seen_splash = 1 WHERE qw_id = :qwId;";
+        $arr = array(':qwId' => $qw_id);
+        $this->PDOX->queryDie($query, $arr);
     }
 
     function getMainTitle($qw_id) {
