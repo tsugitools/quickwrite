@@ -17,6 +17,14 @@ $OUTPUT->header();
 
 include("tool-header.html");
 
+?>
+<style type="text/css">
+    body {
+        background-color: #1066EB;
+    }
+</style>
+<?php
+
 $OUTPUT->bodyStart();
 ?>
     <section class="splash-container">

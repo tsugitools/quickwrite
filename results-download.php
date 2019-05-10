@@ -26,7 +26,10 @@ $OUTPUT->flashMessages();
 
 ?>
     <div class="container">
-        <h1>Download Results</h1>
+        <h1>
+            <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
+            Download Results
+        </h1>
         <p class="lead">Click on the link below to download the student results.</p>
         <h4>
             <a href="actions/ExportToFile.php">
@@ -35,6 +38,8 @@ $OUTPUT->flashMessages();
         </h4>
     </div>
 <?php
+
+include("help.php");
 
 $OUTPUT->footerStart();
 

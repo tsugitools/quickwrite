@@ -42,13 +42,16 @@ $OUTPUT->flashMessages();
 
 ?>
     <div class="container">
-        <h1 id="toolTitle" class="flx-cntnr flx-row flx-nowrap flx-start">
-            <span class="title-text-span" onclick="editTitleText();"><?=$toolTitle?></span>
-            <a id="toolTitleEditLink" class="toolTitleAction" href="javascript:void(0);" onclick="editTitleText();">
-                <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
-                <span class="sr-only">Edit Title Text</span>
-            </a>
-        </h1>
+        <div id="toolTitle" class="h1">
+            <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
+            <span class="flx-cntnr flx-row flx-nowrap flx-start">
+                <span class="title-text-span" onclick="editTitleText();"><?=$toolTitle?></span>
+                <a id="toolTitleEditLink" class="toolTitleAction" href="javascript:void(0);" onclick="editTitleText();">
+                    <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
+                    <span class="sr-only">Edit Title Text</span>
+                </a>
+            </span>
+        </div>
         <form id="toolTitleForm" action="actions/UpdateMainTitle.php" method="post" style="display:none;">
                 <label for="toolTitleInput" class="sr-only">Title Text</label>
                 <div class="h1 flx-cntnr flx-row flx-nowrap flx-start">
@@ -130,6 +133,8 @@ $OUTPUT->flashMessages();
 
     <input type="hidden" id="sess" value="<?php echo($_GET["PHPSESSID"]) ?>">
 <?php
+
+include("help.php");
 
 $OUTPUT->footerStart();
 

@@ -39,7 +39,10 @@ $OUTPUT->flashMessages();
 
 ?>
     <div class="container">
-        <h1><?=$toolTitle?></h1>
+        <h1>
+            <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
+            <?=$toolTitle?>
+        </h1>
         <?php
         foreach ($questions as $question) {
             $answer = $QW_DAO->getStudentAnswerForQuestion($question["question_id"], $USER->id);
@@ -70,6 +73,9 @@ $OUTPUT->flashMessages();
         ?>
     </div>
 <?php
+
+include("help.php");
+
 $OUTPUT->footerStart();
 
 include("tool-footer.html");
