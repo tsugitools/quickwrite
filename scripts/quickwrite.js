@@ -4,6 +4,16 @@ $(document).ready(function(){
     setTimeout(function() {
         $(".alert-banner").slideUp();
     }, 3000);
+
+    $('.results-collapse.collapse').on('show.bs.collapse', function(){
+        var rowDiv = $(this).parent();
+        rowDiv.find(".fa.rotate").addClass("open");
+        rowDiv.parent().addClass("selected-row");
+    }).on('hide.bs.collapse', function(){
+        var rowDiv = $(this).parent();
+        rowDiv.find(".fa.rotate").removeClass("open");
+        rowDiv.parent().removeClass("selected-row");
+    });
 });
 function saveTitle() {
     var sessionId = $("#sess").val();
@@ -34,7 +44,7 @@ function showNewQuestionRow() {
     var questionLink = $("#addQuestionLink");
     var questionRow = $("#newQuestionRow");
 
-    questionLink.addClass("disabled");
+    questionLink.hide();
     questionRow.fadeIn();
     var theForm = $("#questionTextForm-1");
     theForm.find('#questionTextInput-1').focus()
@@ -50,7 +60,7 @@ function showNewQuestionRow() {
     $(".questionCancelAction-1").off("click").on("click", function(e) {
         $("#questionTextInput-1").val('');
         questionRow.hide();
-        questionLink.removeClass("disabled");
+        questionLink.show();
     });
 }
 function editQuestionText(questionId) {

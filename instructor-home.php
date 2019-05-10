@@ -28,6 +28,12 @@ if (!$toolTitle) {
 
 $questions = $QW_DAO->getQuestions($_SESSION["qw_id"]);
 
+// Clear any preview responses
+$instructors = $QW_DAO->findInstructors($CONTEXT->id);
+foreach($instructors as $instructor) {
+    $QW_DAO->deleteAnswers($questions, $instructor["user_id"]);
+}
+
 include("menu.php");
 
 $OUTPUT->flashMessages();
@@ -35,8 +41,8 @@ $OUTPUT->flashMessages();
 ?>
     <div class="container">
         <h1 id="toolTitle" class="flx-cntnr flx-row flx-nowrap flx-start">
-            <span class="title-text-span"><?=$toolTitle?></span>
-            <a id="toolTitleEditLink" class="toolTitleAction" href="javascript:void(0);" onclick="editTitleText()">
+            <span class="title-text-span" onclick="editTitleText();"><?=$toolTitle?></span>
+            <a id="toolTitleEditLink" class="toolTitleAction" href="javascript:void(0);" onclick="editTitleText();">
                 <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
                 <span class="sr-only">Edit Title Text</span>
             </a>

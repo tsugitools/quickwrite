@@ -134,6 +134,13 @@ class QW_DAO {
         return $context['modified'];
     }
 
+    function getNumberQuestionsAnswered($user_id, $qw_id) {
+        $query = "SELECT count(*) as num_answered FROM {$this->p}qw_answer a join {$this->p}qw_question q on a.question_id = q.question_id WHERE a.user_id = :userId AND q.qw_id = :qwId AND a.answer_txt is not null;";
+        $arr = array(':userId' => $user_id, ':qwId' => $qw_id);
+        $context = $this->PDOX->rowDie($query, $arr);
+        return $context['num_answered'];
+    }
+
     function createAnswer($user_id, $question_id, $answer_txt, $current_time) {
         $query = "INSERT INTO {$this->p}qw_answer (user_id, question_id, answer_txt, modified) VALUES (:userId, :questionId, :answerTxt, :currentTime);";
         $arr = array(':userId' => $user_id,':questionId' => $question_id, ':answerTxt' => $answer_txt, ':currentTime' => $current_time);
@@ -144,6 +151,16 @@ class QW_DAO {
     function updateAnswer($answer_id, $answer_txt, $current_time) {
         $query = "UPDATE {$this->p}qw_answer set answer_txt = :answerTxt, modified = :currentTime where answer_id = :answerId;";
         $arr = array(':answerId' => $answer_id, ':answerTxt' => $answer_txt, ':currentTime' => $current_time);
+        $this->PDOX->queryDie($query, $arr);
+    }
+
+    function deleteAnswers($questions, $user_id) {
+        $questionIds = array();
+        foreach($questions as $question) {
+            array_push($questionIds, $question["question_id"]);
+        }
+        $query = "DELETE FROM {$this->p}qw_answer WHERE user_id = :userId AND question_id in (".implode(',', array_map('intval', $questionIds)).");";
+        $arr = array(':userId' => $user_id);
         $this->PDOX->queryDie($query, $arr);
     }
 
@@ -171,5 +188,18 @@ class QW_DAO {
         $arr = array(':user_id' => $user_id);
         $context = $this->PDOX->rowDie($query, $arr);
         return $context["displayname"];
+    }
+
+    function findInstructors($context_id) {
+        $query = "SELECT user_id FROM {$this->p}lti_membership WHERE context_id = :context_id AND role = '1000';";
+        $arr = array(':context_id' => $context_id);
+        return $this->PDOX->allRowsDie($query, $arr);
+    }
+
+    function isUserInstructor($context_id, $user_id) {
+        $query = "SELECT role FROM {$this->p}lti_membership WHERE context_id = :context_id AND user_id = :user_id;";
+        $arr = array(':context_id' => $context_id, ':user_id' => $user_id);
+        $role = $this->PDOX->rowDie($query, $arr);
+        return $role["role"] == '1000';
     }
 }

@@ -45,7 +45,7 @@ $OUTPUT->flashMessages();
         foreach ($questions as $question) {
             $answer = $QW_DAO->getStudentAnswerForQuestion($question["question_id"], $USER->id);
             ?>
-            <h2>Question <?=$questionNum?></h2>
+            <h2 class="small-hdr"><small>Question <?=$questionNum?></small></h2>
             <?php
             if (!$answer) {
                 ?>
@@ -60,9 +60,9 @@ $OUTPUT->flashMessages();
                 <?php
             } else {
                 $dateTime = new DateTime($answer['modified']);
-                $formattedDate = $dateTime->format("m-d-y")." | ".$dateTime->format("h:i A");
+                $formattedDate = $dateTime->format("m/d/y")." | ".$dateTime->format("h:i A");
                 ?>
-                <h3><?= $question["question_txt"] ?></h3>
+                <h3 class="sub-hdr"><?= $question["question_txt"] ?></h3>
                 <p><?=$formattedDate?></p>
                 <p><?=$answer["answer_txt"]?></p>
                 <?php

@@ -19,15 +19,15 @@ if ($USER->instructor) {
                 if ('student-home.php' != basename($_SERVER['PHP_SELF'])) {
                     ?>
                     <li <?php if('instructor-home.php' == basename($_SERVER['PHP_SELF'])){echo ' class="active"';} ?>><a href="instructor-home.php"><span class="fa fa-cog" aria-hidden="true"></span> Build</a></li>
-                    <li <?php if('results-responder.php' == basename($_SERVER['PHP_SELF']) || 'results-question.php' == basename($_SERVER['PHP_SELF']) || 'results-export.php' == basename($_SERVER['PHP_SELF'])){echo ' class="active dropdown"';}else{ echo 'class="dropdown"';} ?>>
+                    <li <?php if('results-student.php' == basename($_SERVER['PHP_SELF']) || 'results-question.php' == basename($_SERVER['PHP_SELF']) || 'results-download.php' == basename($_SERVER['PHP_SELF'])){echo ' class="active dropdown"';}else{ echo 'class="dropdown"';} ?>>
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="fa fa-list-ul" aria-hidden="true"></span> Results <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="results-responder.php">By Responder</a></li>
+                            <li><a href="results-student.php">By Student</a></li>
                             <li><a href="results-question.php">By Question</a></li>
-                            <li><a href="results-export.php">Export Results</a></li>
+                            <li><a href="results-download.php">Download Results</a></li>
                         </ul>
                     </li>
-                    <li><a href="student-home.php"><span class="fa fa-eye" aria-hidden="true"></span> Student View</a></li>
+                    <li><a href="student-home.php"><span class="fa fa-graduation-cap" aria-hidden="true"></span> Student View</a></li>
                     <?php
                 } else {
                     ?>
