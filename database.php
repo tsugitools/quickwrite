@@ -53,3 +53,25 @@ $DATABASE_INSTALL = array(
     
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8")
 );
+
+$DATABASE_UPGRADE = function($oldversion) {
+    global $CFG, $PDOX;
+
+    // Add splash column
+    if (!$PDOX->columnExists('seen_splash', "{$CFG->dbprefix}qw_main")) {
+        $sql = "ALTER TABLE {$CFG->dbprefix}qw_main ADD seen_splash BOOL NOT NULL DEFAULT 0";
+        echo("Upgrading: " . $sql . "<br/>\n");
+        error_log("Upgrading: " . $sql);
+        $q = $PDOX->queryDie($sql);
+    }
+
+    // Remove splash table
+    if($PDOX->describe("{$CFG->dbprefix}qw_splash")) {
+        $sql = "DROP TABLE {$CFG->dbprefix}qw_splash;";
+        echo("Upgrading: " . $sql . "<br/>\n");
+        error_log("Upgrading: " . $sql);
+        $q = $PDOX->queryDie($sql);
+    }
+
+    return '201905101420';
+};
