@@ -103,7 +103,7 @@ $OUTPUT->flashMessages();
             }
             ?>
             <div id="newQuestionRow" class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row" style="display:none;">
-                <div><?=$question["question_num"]+1?>.</div>
+                <div><?=$questions ? count($questions)+1 : 1?>.</div>
                 <div class="flx-grow-all question-text">
                     <form id="questionTextForm-1" action="actions/AddOrEditQuestion.php" method="post">
                         <input type="hidden" name="questionId" value="-1">
