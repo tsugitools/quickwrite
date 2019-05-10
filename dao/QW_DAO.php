@@ -115,6 +115,12 @@ class QW_DAO {
         $this->PDOX->queryDie($query, $arr);
     }
 
+    function updateQuestionNumber($question_id, $new_number) {
+        $query = "UPDATE {$this->p}qw_question set question_num = :questionNumber WHERE question_id = :questionId;";
+        $arr = array(':questionId' => $question_id, ':questionNumber' => $new_number);
+        $this->PDOX->queryDie($query, $arr);
+    }
+
     function getUsersWithAnswers($qw_id) {
         $query = "SELECT DISTINCT user_id FROM {$this->p}qw_answer a join {$this->p}qw_question q on a.question_id = q.question_id WHERE q.qw_id = :qwId;";
         $arr = array(':qwId' => $qw_id);

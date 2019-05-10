@@ -33,7 +33,6 @@ $OUTPUT->flashMessages();
         <section id="questionResponses">
             <div class="list-group">
                 <?php
-                $questionNumber = 1;
                 foreach ($questions as $question) {
                     $responses = $QW_DAO->getAllAnswersToQuestion($question["question_id"]);
                     $numberResponses = count($responses);
@@ -42,7 +41,7 @@ $OUTPUT->flashMessages();
                         <div class="row">
                             <div class="col-sm-3 header-col">
                                 <a href="#responses<?=$question["question_id"]?>" class="h4 response-collapse-link" data-toggle="collapse">
-                                    Question <?=$questionNumber?>
+                                    Question <?=$question["question_num"]?>
                                     <span class="fa fa-chevron-down rotate" aria-hidden="true"></span>
                                 </a>
                             </div>
@@ -76,7 +75,6 @@ $OUTPUT->flashMessages();
                         </div>
                     </div>
                     <?php
-                    $questionNumber++;
                 }
                 ?>
             </div>
