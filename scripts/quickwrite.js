@@ -54,10 +54,10 @@ function showNewQuestionRow() {
                 theForm.submit();
             }
         });
-    $(".questionSaveAction-1").off("click").on("click", function(e) {
+    $("#questionSaveAction-1").off("click").on("click", function(e) {
         theForm.submit();
     });
-    $(".questionCancelAction-1").off("click").on("click", function(e) {
+    $("#questionCancelAction-1").off("click").on("click", function(e) {
         $("#questionTextInput-1").val('');
         questionRow.hide();
         questionLink.show();
@@ -65,22 +65,24 @@ function showNewQuestionRow() {
 }
 function editQuestionText(questionId) {
     $("#questionText"+questionId).hide();
-    $(".questionDeleteAction"+questionId).hide();
-    $(".questionEditAction"+questionId).hide();
-    $(".questionSaveAction"+questionId).show()
+    $("#questionDeleteAction"+questionId).hide();
+    $("#questionEditAction"+questionId).hide();
+    $("#questionReorderAction"+questionId).hide();
+    $("#questionSaveAction"+questionId).show()
         .off("click").on("click", function(e) {
             theForm.submit();
         });
-    $(".questionCancelAction"+questionId).show()
+    $("#questionCancelAction"+questionId).show()
         .off("click").on("click", function(e) {
             var theText = $("#questionText"+questionId);
             theText.show();
             theForm.hide();
             $("#questionTextInput"+questionId).val(theText.text());
-            $(".questionDeleteAction"+questionId).show();
-            $(".questionEditAction"+questionId).show();
-            $(".questionSaveAction"+questionId).hide();
-            $(".questionCancelAction"+questionId).hide();
+            $("#questionDeleteAction"+questionId).show();
+            $("#questionEditAction"+questionId).show();
+            $("#questionReorderAction"+questionId).show();
+            $("#questionSaveAction"+questionId).hide();
+            $("#questionCancelAction"+questionId).hide();
         });
     var theForm = $("#questionTextForm"+questionId);
     theForm.show();

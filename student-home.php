@@ -41,11 +41,10 @@ $OUTPUT->flashMessages();
     <div class="container">
         <h1><?=$toolTitle?></h1>
         <?php
-        $questionNum = 1;
         foreach ($questions as $question) {
             $answer = $QW_DAO->getStudentAnswerForQuestion($question["question_id"], $USER->id);
             ?>
-            <h2 class="small-hdr"><small>Question <?=$questionNum?></small></h2>
+            <h2 class="small-hdr"><small>Question <?=$question["question_num"]?></small></h2>
             <?php
             if (!$answer) {
                 ?>
@@ -67,7 +66,6 @@ $OUTPUT->flashMessages();
                 <p><?=$answer["answer_txt"]?></p>
                 <?php
             }
-            $questionNum++;
         }
         ?>
     </div>

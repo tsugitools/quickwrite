@@ -72,14 +72,13 @@ $OUTPUT->flashMessages();
                                     </div>
                                     <div id="responses<?= $student["user_id"] ?>" class="col-xs-12 results-collapse collapse">
                                         <?php
-                                        $questionNumber = 1;
                                         foreach ($questions as $question) {
                                             $response = $QW_DAO->getStudentAnswerForQuestion($question["question_id"], $student["user_id"]);
                                             ?>
                                             <div class="row response-row">
                                                 <div class="col-sm-3">
                                                     <h4 class="small-hdr hdr-notop-mrgn">
-                                                        <small>Question <?= $questionNumber ?></small>
+                                                        <small>Question <?= $question["question_num"] ?></small>
                                                     </h4>
                                                     <h5 class="sub-hdr"><?= $question["question_txt"] ?></h5>
                                                 </div>
@@ -88,7 +87,6 @@ $OUTPUT->flashMessages();
                                                 </div>
                                             </div>
                                             <?php
-                                            $questionNumber++;
                                         }
                                         ?>
                                     </div>
