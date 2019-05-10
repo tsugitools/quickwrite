@@ -28,10 +28,12 @@ if (!$toolTitle) {
 
 $questions = $QW_DAO->getQuestions($_SESSION["qw_id"]);
 
-// Clear any preview responses
-$instructors = $QW_DAO->findInstructors($CONTEXT->id);
-foreach($instructors as $instructor) {
-    $QW_DAO->deleteAnswers($questions, $instructor["user_id"]);
+// Clear any preview responses if there are questions
+if ($questions) {
+    $instructors = $QW_DAO->findInstructors($CONTEXT->id);
+    foreach($instructors as $instructor) {
+        $QW_DAO->deleteAnswers($questions, $instructor["user_id"]);
+    }
 }
 
 include("menu.php");
