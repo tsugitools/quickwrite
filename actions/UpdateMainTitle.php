@@ -21,6 +21,8 @@ if ($USER->instructor) {
     }
 
     if (!isset($_POST["nonav"])) {
+        $_SESSION['success'] = "Title saved.";
+
         header( 'Location: '.addSession('../instructor-home.php') ) ;
     }
 }
