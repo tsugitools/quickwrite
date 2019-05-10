@@ -29,7 +29,10 @@ $OUTPUT->flashMessages();
 
 ?>
     <div class="container">
-        <h1>Results <small>by Question</small></h1>
+        <h1>
+            <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
+            Results <small>by Question</small>
+        </h1>
         <section id="questionResponses">
             <div class="list-group">
                 <?php
@@ -82,6 +85,8 @@ $OUTPUT->flashMessages();
     </div>
 
 <?php
+
+include("help.php");
 
 $OUTPUT->footerStart();
 
