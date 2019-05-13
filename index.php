@@ -36,6 +36,12 @@ if ( $USER->instructor ) {
     } else {
         $_SESSION["qw_id"] = $mainId;
 
-        header( 'Location: '.addSession('student-home.php') ) ;
+        $questions = $QW_DAO->getQuestions($_SESSION["qw_id"]);
+
+        if (!$questions || count($questions) == 0) {
+            header('Location: '.addSession('splash.php'));
+        } else {
+            header( 'Location: '.addSession('student-home.php') ) ;
+        }
     }
 }
