@@ -1,4 +1,11 @@
 /* Quick Write Specific */
+.title-edit-input,
+.title-text-span {
+    margin-right: 14px;
+}
+.toolTitleAction {
+    font-size: 24px;
+}
 .question-text {
     padding: 0 14px;
 }
@@ -18,12 +25,15 @@
 .question-text-span:hover, .title-text-span:hover {
     background-color: #BEDCFE;
 }
-.title-edit-input,
-.title-text-span {
-    margin-right: 14px;
+#addQuestions {
+    margin-top: 20px;
 }
-.toolTitleAction {
-    font-size: 24px;
+.import-link {
+    padding-left: 36px;
+}
+.import-body {
+    max-height: 600px;
+    overflow-y: auto;
 }
 .response-panel-header,
 .response-list-group-item {
