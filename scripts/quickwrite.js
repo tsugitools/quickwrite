@@ -14,6 +14,11 @@ $(document).ready(function(){
         rowDiv.find(".fa.rotate").removeClass("open");
         rowDiv.parent().removeClass("selected-row");
     });
+
+    $("#importModal").on("hidden.bs.modal", function() {
+        $(this).find('.results-collapse.collapse').collapse("hide");
+        $(this).find("input[name='question']").prop("checked", false);
+    });
 });
 function saveTitle() {
     var sessionId = $("#sess").val();
@@ -41,10 +46,10 @@ function confirmResetTool() {
     return confirm("Are you sure you want to remove all questions and answers from this tool? This cannot be undone.");
 }
 function showNewQuestionRow() {
-    var questionLink = $("#addQuestionLink");
+    var addQuestionsSection = $("#addQuestions");
     var questionRow = $("#newQuestionRow");
 
-    questionLink.hide();
+    addQuestionsSection.hide();
     questionRow.fadeIn();
     var theForm = $("#questionTextForm-1");
     theForm.find('#questionTextInput-1').focus()
@@ -60,7 +65,7 @@ function showNewQuestionRow() {
     $("#questionCancelAction-1").off("click").on("click", function(e) {
         $("#questionTextInput-1").val('');
         questionRow.hide();
-        questionLink.show();
+        addQuestionsSection.show();
     });
 }
 function editQuestionText(questionId) {

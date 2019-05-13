@@ -34,6 +34,12 @@ class QW_DAO {
         return $this->PDOX->lastInsertId();
     }
 
+    function findQuestionsForImport($user_id, $qw_id) {
+        $query = "SELECT q.*, m.title as tooltitle, c.title as sitetitle FROM {$this->p}qw_question q join {$this->p}qw_main m on q.qw_id = m.qw_id join {$this->p}lti_context c on m.context_id = c.context_id WHERE m.user_id = :userId AND m.qw_id != :qw_id";
+        $arr = array(':userId' => $user_id, ":qw_id" => $qw_id);
+        return $this->PDOX->allRowsDie($query, $arr);
+    }
+
     function hasSeenSplash($qw_id) {
         $query = "SELECT seen_splash FROM {$this->p}qw_main WHERE qw_id = :qwId";
         $arr = array(':qwId' => $qw_id);

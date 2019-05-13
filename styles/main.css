@@ -6,6 +6,14 @@ body {
     font-size: 14px;
     line-height: 27px;
 }
+a:active,
+a:focus,
+a:hover,
+.btn-link:active,
+.btn-link:focus,
+.btn-link:hover {
+    text-decoration: none;
+}
 h1, .h1 {
     font-weight: 900;
     font-size: 37px;
