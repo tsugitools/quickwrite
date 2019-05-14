@@ -56,6 +56,8 @@ $OUTPUT->flashMessages();
                             </div>
                             <div id="responses<?=$question["question_id"]?>" class="col-xs-12 results-collapse collapse">
                                 <?php
+                                // Sort by modified date with most recent at the top
+                                usort($responses, 'response_date_compare');
                                 foreach ($responses as $response) {
                                     if (!$QW_DAO->isUserInstructor($CONTEXT->id, $response["user_id"])) {
                                         $responseDate = new DateTime($response["modified"]);
@@ -93,3 +95,10 @@ $OUTPUT->footerStart();
 include("tool-footer.html");
 
 $OUTPUT->footerEnd();
+
+function response_date_compare($response1, $response2) {
+    $time1 = strtotime($response1['modified']);
+    $time2 = strtotime($response2['modified']);
+    // Most recent at top
+    return $time2 - $time1;
+}

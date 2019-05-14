@@ -14,6 +14,11 @@ $p = $CFG->dbprefix;
 $QW_DAO = new QW_DAO($PDOX, $p);
 
 $students = $QW_DAO->getUsersWithAnswers($_SESSION["qw_id"]);
+$studentAndDate = array();
+foreach($students as $student) {
+    $studentAndDate[$student["user_id"]] = new DateTime($QW_DAO->getMostRecentAnswerDate($student["user_id"], $_SESSION["qw_id"]));
+}
+
 $questions = $QW_DAO->getQuestions($_SESSION["qw_id"]);
 $totalQuestions = count($questions);
 
@@ -51,17 +56,18 @@ $OUTPUT->flashMessages();
                 </div>
                 <div class="list-group">
                     <?php
-                    foreach ($students as $student) {
-                        if (!$QW_DAO->isUserInstructor($CONTEXT->id, $student["user_id"])) {
-                            $mostRecentDate = new DateTime($QW_DAO->getMostRecentAnswerDate($student["user_id"], $_SESSION["qw_id"]));
+                    // Sort students by mostRecentDate desc
+                    arsort($studentAndDate);
+                    foreach ($studentAndDate as $student_id => $mostRecentDate) {
+                        if (!$QW_DAO->isUserInstructor($CONTEXT->id, $student_id)) {
                             $formattedMostRecentDate = $mostRecentDate->format("m/d/y") . " | " . $mostRecentDate->format("h:i A");
-                            $numberAnswered = $QW_DAO->getNumberQuestionsAnswered($student["user_id"], $_SESSION["qw_id"]);
+                            $numberAnswered = $QW_DAO->getNumberQuestionsAnswered($student_id, $_SESSION["qw_id"]);
                             ?>
                             <div class="list-group-item response-list-group-item">
                                 <div class="row">
                                     <div class="col-xs-6 header-col">
-                                        <a href="#responses<?= $student["user_id"] ?>" class="h4 response-collapse-link" data-toggle="collapse">
-                                            <?= $QW_DAO->findDisplayName($student["user_id"]) ?>
+                                        <a href="#responses<?= $student_id ?>" class="h4 response-collapse-link" data-toggle="collapse">
+                                            <?= $QW_DAO->findDisplayName($student_id) ?>
                                             <span class="fa fa-chevron-down rotate" aria-hidden="true"></span>
                                         </a>
                                     </div>
@@ -71,10 +77,10 @@ $OUTPUT->flashMessages();
                                     <div class="col-xs-3 text-center header-col">
                                         <span class="h5 inline"><?= $numberAnswered . '/' . $totalQuestions ?></span>
                                     </div>
-                                    <div id="responses<?= $student["user_id"] ?>" class="col-xs-12 results-collapse collapse">
+                                    <div id="responses<?= $student_id ?>" class="col-xs-12 results-collapse collapse">
                                         <?php
                                         foreach ($questions as $question) {
-                                            $response = $QW_DAO->getStudentAnswerForQuestion($question["question_id"], $student["user_id"]);
+                                            $response = $QW_DAO->getStudentAnswerForQuestion($question["question_id"], $student_id);
                                             ?>
                                             <div class="row response-row">
                                                 <div class="col-sm-3">
