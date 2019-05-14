@@ -13,7 +13,7 @@
                     case 'instructor-home.php':
                         ?>
                         <h4>General Help</H4>
-                        <p>Use this page to add questions for your students to answer. Once you add a question it is immediately available to your student.</p>
+                        <p>Use this page to add questions for your students to answer. Once you add a question it is immediately available to students.</p>
                         <h5>Adding a Question</h5>
                         <ol>
                             <li>Click "Add Question"</li>
@@ -21,7 +21,7 @@
                             <li>Click the save icon or press "Enter" on your keyboard</li>
                         </ol>
                         <h5>Modifying Questions</h5>
-                        <p>Use the icons next to an added question to edit the text, move it up in the list, or delete it along with any answers.</p>
+                        <p>Use the icons to the right of an added question to edit the text, move it up in the list, or delete it along with any answers.</p>
                         <h5>Editing the Title</h5>
                         <p>You can edit the title of this Quick Write by clicking the edit icon next to the title at the top of this page.</p>
                         <?php
@@ -43,19 +43,19 @@
                     case 'results-question.php':
                         ?>
                         <h4>Viewing Results</H4>
-                        <p>You are viewing the results by question. You click the questions below to see what students' answered for that question.</p>
+                        <p>You are viewing the results by question. Click on a question below to see what students answered for that question.</p>
                         <?php
                         break;
                     case 'results-student.php':
                         ?>
                         <h4>Viewing Results</H4>
-                        <p>You are viewing the results by student. You click on a student below to see how that student answered each question.</p>
+                        <p>You are viewing the results by student. Click on a student below to see how that student answered each question.</p>
                         <?php
                         break;
                     case 'results-download.php':
                         ?>
                         <h4>Downloading Results</H4>
-                        <p>Click on the link to download an Excel file of all of the results for this Quick Write.</p>
+                        <p>Click on the link to download an Excel file with all of the results for this Quick Write.</p>
                         <?php
                         break;
                     default:
