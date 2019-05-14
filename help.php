@@ -44,12 +44,14 @@
                         ?>
                         <h4>Viewing Results</H4>
                         <p>You are viewing the results by question. Click on a question below to see what students answered for that question.</p>
+                        <p>For each question, students are sorted with the most recently modified at the top.</p>
                         <?php
                         break;
                     case 'results-student.php':
                         ?>
                         <h4>Viewing Results</H4>
                         <p>You are viewing the results by student. Click on a student below to see how that student answered each question.</p>
+                        <p>Students are sorted with the most recently submitted at the top of the list.</p>
                         <?php
                         break;
                     case 'results-download.php':
