@@ -34,7 +34,7 @@ include("menu.php");
 ?>
     <div class="container">
         <h1>
-            <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
+            <button id="helpButton" type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
             Results <small>by Student</small>
         </h1>
         <section id="studentResponses">
@@ -42,13 +42,13 @@ include("menu.php");
                 <div class="panel-heading response-panel-header">
                     <div class="row">
                         <div class="col-xs-6">
-                            <h4>Student Name</h4>
+                            <h4 class="results-table-hdr">Student Name</h4>
                         </div>
                         <div class="col-xs-3 text-center">
-                            <h4>Last Updated</h4>
+                            <h4 class="results-table-hdr">Last Updated</h4>
                         </div>
                         <div class="col-xs-3 text-center">
-                            <h4>Completed</h4>
+                            <h4 class="results-table-hdr">Completed</h4>
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@ include("menu.php");
                                                     <h5 class="sub-hdr"><?= $question["question_txt"] ?></h5>
                                                 </div>
                                                 <div class="col-sm-offset-1 col-sm-8">
-                                                    <p><?= $response["answer_txt"] ?></p>
+                                                    <p class="response-text"><?= $response["answer_txt"] ?></p>
                                                 </div>
                                             </div>
                                             <?php
