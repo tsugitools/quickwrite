@@ -38,6 +38,11 @@ if ($USER->instructor) {
             </ul>
         </div>
     </div>
+    <div id="flashmessages">
+        <?php
+        $OUTPUT->flashMessages();
+        ?>
+    </div>
 </nav>
 <?php
 } else {
@@ -47,6 +52,11 @@ if ($USER->instructor) {
             <div class="navbar-header">
                 <a class="navbar-brand" href="index.php">Quick Write</a>
             </div>
+        </div>
+        <div id="flashmessages">
+            <?php
+            $OUTPUT->flashMessages();
+            ?>
         </div>
     </nav>
 <?php

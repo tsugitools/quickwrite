@@ -38,8 +38,6 @@ if ($questions) {
 
 include("menu.php");
 
-$OUTPUT->flashMessages();
-
 ?>
     <div class="container">
         <div id="toolTitle" class="h1">
@@ -64,15 +62,15 @@ $OUTPUT->flashMessages();
                         <span class="fa fa-fw fa-times" aria-hidden="true"></span>
                         <span class="sr-only">Cancel Title Text</span>
                     </a>
-            </div>
+                </div>
         </form>
         <p class="lead">Add questions to quickly collect feedback from your students.</p>
         <section id="theQuestions">
             <?php
             foreach ($questions as $question) {
                 ?>
-                <div class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row">
-                    <div><?=$question["question_num"]?>.</div>
+                <div id="questionRow<?=$question["question_id"]?>" class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row" data-question-number="<?=$question["question_num"]?>">
+                    <div class="question-number"><?=$question["question_num"]?>.</div>
                     <div class="flx-grow-all question-text">
                         <span class="question-text-span" onclick="editQuestionText(<?=$question["question_id"]?>)" id="questionText<?=$question["question_id"]?>"><?= $question["question_txt"] ?></span>
                         <form id="questionTextForm<?=$question["question_id"]?>" onsubmit="return confirmDeleteQuestionBlank(<?=$question["question_id"]?>)" action="actions/AddOrEditQuestion.php" method="post" style="display:none;">
@@ -85,11 +83,11 @@ $OUTPUT->flashMessages();
                         <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
                         <span class="sr-only">Edit Question Text</span>
                     </a>
-                    <a id="questionReorderAction<?=$question["question_id"]?>" href="actions/ReorderQuestion.php?question_id=<?=$question["question_id"]?>">
+                    <a id="questionReorderAction<?=$question["question_id"]?>" href="javascript:void(0);" onclick="moveQuestionUp(<?=$question["question_id"]?>)">
                         <span class="fa fa-fw fa-chevron-circle-up" aria-hidden="true"></span>
                         <span class="sr-only">Move Question Up</span>
                     </a>
-                    <a id="questionDeleteAction<?=$question["question_id"]?>" onclick="return confirmDeleteQuestion();" href="actions/DeleteQuestion.php?question_id=<?=$question["question_id"]?>">
+                    <a id="questionDeleteAction<?=$question["question_id"]?>" href="javascript:void(0);" onclick="deleteQuestion(<?=$question["question_id"]?>)">
                         <span aria-hidden="true" class="fa fa-fw fa-trash"></span>
                         <span class="sr-only">Delete Question</span>
                     </a>
@@ -105,8 +103,8 @@ $OUTPUT->flashMessages();
                 <?php
             }
             ?>
-            <div id="newQuestionRow" class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row" style="display:none;">
-                <div><?=$questions ? count($questions)+1 : 1?>.</div>
+            <div id="newQuestionRow" class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row" style="display:none;" data-question-number="<?=$questions ? count($questions)+1 : 1?>">
+                <div id="newQuestionNumber"><?=$questions ? count($questions)+1 : 1?>.</div>
                 <div class="flx-grow-all question-text">
                     <form id="questionTextForm-1" action="actions/AddOrEditQuestion.php" method="post">
                         <input type="hidden" name="questionId" value="-1">

@@ -12,17 +12,39 @@ $p = $CFG->dbprefix;
 $QW_DAO = new QW_DAO($PDOX, $p);
 
 $currentTime = new DateTime('now', new DateTimeZone($CFG->timezone));
-$currentTime = $currentTime->format("Y-m-d H:i:s");
+$currentTimeForDB = $currentTime->format("Y-m-d H:i:s");
 
 $questionId = $_POST["questionId"];
 $answerText = $_POST["answerText"];
 
-if (!isset($answerText) || $answerText == "") {
+$result = array();
+
+if (!isset($answerText) || trim($answerText) == "") {
     $_SESSION['error'] = "Your answer cannot be blank.";
+    $result["answer_content"] = false;
 } else {
-    $QW_DAO->createAnswer($USER->id, $questionId, $answerText, $currentTime);
+    $QW_DAO->createAnswer($USER->id, $questionId, $answerText, $currentTimeForDB);
+
+    $question = $QW_DAO->getQuestionById($questionId);
+    $formattedDate = $currentTime->format("m/d/y")." | ".$currentTime->format("h:i A");
+
+    ob_start();
+    ?>
+    <h3 class="sub-hdr"><?= $question["question_txt"] ?></h3>
+    <p><?=$formattedDate?></p>
+    <p><?=$answerText?></p>
+    <?php
+    $result["answer_content"] = ob_get_clean();
+
     $_SESSION['success'] = "Answer saved.";
 }
 
-header( 'Location: '.addSession('../student-home.php') ) ;
+$OUTPUT->buffer=true;
+$result["flashmessage"] = $OUTPUT->flashMessages();
+
+header('Content-Type: application/json');
+
+echo json_encode($result, JSON_HEX_QUOT | JSON_HEX_TAG);
+
+exit;
 
