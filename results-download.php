@@ -25,7 +25,7 @@ include("menu.php");
 ?>
     <div class="container">
         <h1>
-            <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
+            <button id="helpButton" type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
             Download Results
         </h1>
         <p class="lead">Click on the link below to download the student results.</p>

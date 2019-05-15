@@ -28,7 +28,7 @@ include("menu.php");
 ?>
     <div class="container">
         <h1>
-            <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
+            <button id="helpButton" type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
             Results <small>by Question</small>
         </h1>
         <section id="questionResponses">

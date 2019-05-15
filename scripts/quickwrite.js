@@ -228,6 +228,7 @@ function moveQuestionUp(questionId) {
         },
         success: function(data) {
             var theQuestionMoved = $("#questionRow" + questionId);
+            theQuestionMoved.hide();
             var currentNumber = theQuestionMoved.data("question-number");
             console.log('current num: ' + currentNumber);
             if (currentNumber === 1) {
@@ -244,6 +245,8 @@ function moveQuestionUp(questionId) {
                 $(this).parent().data("question-number", questionNum);
                 questionNum++;
             });
+
+            theQuestionMoved.fadeIn("fast");
 
             $("#flashmessages").html(data.flashmessage);
             setupAlertHide();
@@ -297,7 +300,7 @@ function answerQuestion(questionId) {
     });
 }
 function setupAlertHide() {
-    // On load hide any alerts after 10 seconds
+    // On load hide any alerts after 3 seconds
     setTimeout(function() {
         $(".alert-banner").slideUp();
     }, 3000);

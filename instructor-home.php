@@ -41,9 +41,9 @@ include("menu.php");
 ?>
     <div class="container">
         <div id="toolTitle" class="h1">
-            <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
+            <button id="helpButton" type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#helpModal"><span class="fa fa-question-circle" aria-hidden="true"></span> Help</button>
             <span class="flx-cntnr flx-row flx-nowrap flx-start">
-                <span class="title-text-span" onclick="editTitleText();"><?=$toolTitle?></span>
+                <span class="title-text-span" onclick="editTitleText();" tabindex="0"><?=$toolTitle?></span>
                 <a id="toolTitleEditLink" class="toolTitleAction" href="javascript:void(0);" onclick="editTitleText();">
                     <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
                     <span class="sr-only">Edit Title Text</span>
@@ -72,7 +72,7 @@ include("menu.php");
                 <div id="questionRow<?=$question["question_id"]?>" class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row" data-question-number="<?=$question["question_num"]?>">
                     <div class="question-number"><?=$question["question_num"]?>.</div>
                     <div class="flx-grow-all question-text">
-                        <span class="question-text-span" onclick="editQuestionText(<?=$question["question_id"]?>)" id="questionText<?=$question["question_id"]?>"><?= $question["question_txt"] ?></span>
+                        <span class="question-text-span" onclick="editQuestionText(<?=$question["question_id"]?>)" id="questionText<?=$question["question_id"]?>" tabindex="0"><?= $question["question_txt"] ?></span>
                         <form id="questionTextForm<?=$question["question_id"]?>" onsubmit="return confirmDeleteQuestionBlank(<?=$question["question_id"]?>)" action="actions/AddOrEditQuestion.php" method="post" style="display:none;">
                             <input type="hidden" name="questionId" value="<?=$question["question_id"]?>">
                             <label for="questionTextInput<?=$question["question_id"]?>" class="sr-only">Question Text</label>

@@ -25,6 +25,9 @@
 .question-text-span:hover, .title-text-span:hover {
     background-color: #BEDCFE;
 }
+.bg-highlight {
+    background-color: #BEDCFE;
+}
 #addQuestions {
     margin-top: 20px;
 }
@@ -71,6 +74,9 @@ a.response-collapse-link:hover {
 p.response-text {
     margin-top: 10px;
 }
+.results-table-hdr {
+    word-break: break-word;
+}
 .rotate{
     -moz-transition: all 200ms linear;
     -webkit-transition: all 200ms linear;
@@ -81,4 +87,16 @@ p.response-text {
     -moz-transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
+}
+@media (max-width: 525px) {
+    .import-link {
+        display: block;
+        padding-top: 10px;
+        padding-left: 0;
+    }
+    #helpButton {
+        display: block;
+        margin: 0 0 0 auto;
+        float: none !important; /* import to override pull-right class */
+    }
 }
