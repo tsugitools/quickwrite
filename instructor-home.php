@@ -38,7 +38,9 @@ if ($questions) {
 
 include("menu.php");
 
+echo '<div id="flashmessages">';
 $OUTPUT->flashMessages();
+echo '</div>';
 
 ?>
     <div class="container">
@@ -64,7 +66,7 @@ $OUTPUT->flashMessages();
                         <span class="fa fa-fw fa-times" aria-hidden="true"></span>
                         <span class="sr-only">Cancel Title Text</span>
                     </a>
-            </div>
+                </div>
         </form>
         <p class="lead">Add questions to quickly collect feedback from your students.</p>
         <section id="theQuestions">
@@ -106,7 +108,7 @@ $OUTPUT->flashMessages();
             }
             ?>
             <div id="newQuestionRow" class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row" style="display:none;">
-                <div><?=$questions ? count($questions)+1 : 1?>.</div>
+                <div id="newQuestionNumber"><?=$questions ? count($questions)+1 : 1?>.</div>
                 <div class="flx-grow-all question-text">
                     <form id="questionTextForm-1" action="actions/AddOrEditQuestion.php" method="post">
                         <input type="hidden" name="questionId" value="-1">

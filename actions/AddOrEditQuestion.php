@@ -13,6 +13,8 @@ $QW_DAO = new QW_DAO($PDOX, $p);
 
 if ($USER->instructor) {
 
+    $result = array();
+
     $questionId = $_POST["questionId"];
     $questionText = $_POST["questionText"];
 
@@ -25,18 +27,67 @@ if ($USER->instructor) {
             $QW_DAO->updateQuestion($questionId, $questionText, $currentTime);
         } else {
             // New question
-            $QW_DAO->createQuestion($_SESSION["qw_id"], $questionText, $currentTime);
+            $questionId = $QW_DAO->createQuestion($_SESSION["qw_id"], $questionText, $currentTime);
+
+            $question = $QW_DAO->getQuestionById($questionId);
+
+            // Create new question markup
+            ob_start();
+            ?>
+            <div class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row">
+                <div><?=$question["question_num"]?>.</div>
+                <div class="flx-grow-all question-text">
+                    <span class="question-text-span" onclick="editQuestionText(<?=$question["question_id"]?>)" id="questionText<?=$question["question_id"]?>"><?= $question["question_txt"] ?></span>
+                    <form id="questionTextForm<?=$question["question_id"]?>" onsubmit="return confirmDeleteQuestionBlank(<?=$question["question_id"]?>)" action="actions/AddOrEditQuestion.php" method="post" style="display:none;">
+                        <input type="hidden" name="questionId" value="<?=$question["question_id"]?>">
+                        <label for="questionTextInput<?=$question["question_id"]?>" class="sr-only">Question Text</label>
+                        <textarea class="form-control" id="questionTextInput<?=$question["question_id"]?>" name="questionText" rows="2" required><?=$question["question_txt"]?></textarea>
+                    </form>
+                </div>
+                <a id="questionEditAction<?=$question["question_id"]?>" href="javascript:void(0);" onclick="editQuestionText(<?=$question["question_id"]?>)">
+                    <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
+                    <span class="sr-only">Edit Question Text</span>
+                </a>
+                <a id="questionReorderAction<?=$question["question_id"]?>" href="actions/ReorderQuestion.php?question_id=<?=$question["question_id"]?>&PHPSESSID=<?=$_POST["PHPSESSID"]?>">
+                    <span class="fa fa-fw fa-chevron-circle-up" aria-hidden="true"></span>
+                    <span class="sr-only">Move Question Up</span>
+                </a>
+                <a id="questionDeleteAction<?=$question["question_id"]?>" onclck="return confirmDeleteQuestion();" href="actions/DeleteQuestion.php?question_id=<?=$question["question_id"]?>&PHPSESSID=<?=$_POST["PHPSESSID"]?>">
+                    <span aria-hidden="true" class="fa fa-fw fa-trash"></span>
+                    <span class="sr-only">Delete Question</span>
+                </a>
+                <a id="questionSaveAction<?=$question["question_id"]?>" href="javascript:void(0);" style="display:none;">
+                    <span aria-hidden="true" class="fa fa-fw fa-save"></span>
+                    <span class="sr-only">Save Question</span>
+                </a>
+                <a id="questionCancelAction<?=$question["question_id"]?>" href="javascript:void(0);" style="display: none;">
+                    <span aria-hidden="true" class="fa fa-fw fa-times"></span>
+                    <span class="sr-only">Cancel Question</span>
+                </a>
+            </div>
+            <?php
+            $result["new_question"] = ob_get_clean();
+            $result["next_question"] = $question["question_num"] + 1;
         }
         $_SESSION['success'] = 'Question Saved.';
     } else {
         if ($questionId > -1) {
             // Blank text means delete question
             $QW_DAO->deleteQuestion($questionId);
+            // Set question id to false to remove question line
+            $questionId = false;
             $_SESSION['success'] = 'Question Deleted.';
         } else {
             $_SESSION['error'] = 'Unable to save blank question.';
         }
     }
 
-    header( 'Location: '.addSession('../instructor-home.php') ) ;
+    $OUTPUT->buffer=true;
+    $result["flashmessage"] = $OUTPUT->flashMessages();
+
+    header('Content-Type: application/json');
+
+    echo json_encode($result, JSON_HEX_QUOT | JSON_HEX_TAG);
+
+    exit;
 }
