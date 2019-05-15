@@ -34,4 +34,7 @@ if ($USER->instructor) {
     echo json_encode($result, JSON_HEX_QUOT | JSON_HEX_TAG);
 
     exit;
+} else {
+    header( 'Location: '.addSession('../student-home.php') ) ;
 }
+

@@ -35,8 +35,6 @@ $moreToSubmit = false;
 
 include("menu.php");
 
-$OUTPUT->flashMessages();
-
 ?>
     <div class="container">
         <h1>
@@ -48,16 +46,17 @@ $OUTPUT->flashMessages();
             $answer = $QW_DAO->getStudentAnswerForQuestion($question["question_id"], $USER->id);
             ?>
             <h2 class="small-hdr"><small>Question <?=$question["question_num"]?></small></h2>
+            <div id="questionAnswer<?=$question["question_id"]?>">
             <?php
             if (!$answer) {
                 ?>
-                <form action="actions/AnswerQuestion.php" method="post">
+                <form id="answerForm<?=$question["question_id"]?>" action="actions/AnswerQuestion.php" method="post">
                     <input type="hidden" name="questionId" value="<?=$question["question_id"]?>">
                     <div class="form-group">
                         <label class="h3" for="answerText<?=$question["question_id"]?>"><?= $question["question_txt"] ?></label>
                         <textarea class="form-control" id="answerText<?=$question["question_id"]?>" name="answerText" rows="5"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success">Submit</button>
+                    <button type="button" class="btn btn-success" onclick="answerQuestion(<?=$question["question_id"]?>);">Submit</button>
                 </form>
                 <?php
             } else {
@@ -69,6 +68,9 @@ $OUTPUT->flashMessages();
                 <p><?=$answer["answer_txt"]?></p>
                 <?php
             }
+            ?>
+            </div>
+            <?php
         }
         ?>
     </div>

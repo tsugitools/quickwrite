@@ -1,8 +1,5 @@
 /*Main Javascript File*/
 $(document).ready(function(){
-
-    setupAlertHide();
-
     $('.results-collapse.collapse').on('show.bs.collapse', function(){
         var rowDiv = $(this).parent();
         rowDiv.find(".fa.rotate").addClass("open");
@@ -46,7 +43,9 @@ function showNewQuestionRow() {
                     data: theForm.serialize(),
                     success: function(data) {
                         $("#questionTextInput-1").val('');
-                        $("#newQuestionNumber").text(data.next_question + '.');
+                        var nextNumber = questionRow.data("question-number") + 1;
+                        $("#newQuestionNumber").text(nextNumber + '.');
+                        questionRow.data("question-number", nextNumber);
                         $("#newQuestionRow").before(data.new_question);
                         $("#flashmessages").html(data.flashmessage);
                         setupAlertHide();
@@ -63,9 +62,11 @@ function showNewQuestionRow() {
             url: theForm.prop("action"),
             data: theForm.serialize(),
             success: function(data) {
-                $("#questionTextInput-1").val('');
-                $("#newQuestionNumber").text(data.next_question + '.');
                 $("#newQuestionRow").before(data.new_question);
+                $("#questionTextInput-1").val('');
+                var nextNumber = $(".question-number").last().parent().data("question-number") + 1;
+                $("#newQuestionNumber").text(nextNumber + '.');
+                questionRow.data("question-number", nextNumber);
                 $("#flashmessages").html(data.flashmessage);
                 setupAlertHide();
                 questionRow.hide();
@@ -93,6 +94,42 @@ function editQuestionText(questionId) {
         .off("keypress").on("keypress", function(e) {
             if(e.which === 13) {
                 e.preventDefault();
+                if ($('#questionTextInput'+questionId).val().trim() === '') {
+                    if(confirmDeleteQuestionBlank(questionId)) {
+                        // User entered blank question text and wants to delete.
+                        deleteQuestion(questionId, true);
+                    }
+                } else {
+                    // Still has text in question. Save it.
+                    $.ajax({
+                        type: "POST",
+                        url: theForm.prop("action"),
+                        data: theForm.serialize(),
+                        success: function(data) {
+                            questionText.text($('#questionTextInput'+questionId).val());
+                            questionText.show();
+                            $("#questionDeleteAction"+questionId).show();
+                            $("#questionEditAction"+questionId).show();
+                            $("#questionReorderAction"+questionId).show();
+                            $("#questionSaveAction"+questionId).hide();
+                            $("#questionCancelAction"+questionId).hide();
+                            theForm.hide();
+                            $("#flashmessages").html(data.flashmessage);
+                            setupAlertHide();
+                        }
+                    });
+                }
+            }
+        });
+    $("#questionSaveAction"+questionId).show()
+        .off("click").on("click", function(e) {
+            if ($('#questionTextInput'+questionId).val().trim() === '') {
+                if(confirmDeleteQuestionBlank(questionId)) {
+                    // User entered blank question text and wants to delete.
+                    deleteQuestion(questionId, true);
+                }
+            } else {
+                // Still has text in question. Save it.
                 $.ajax({
                     type: "POST",
                     url: theForm.prop("action"),
@@ -111,26 +148,6 @@ function editQuestionText(questionId) {
                     }
                 });
             }
-        });
-    $("#questionSaveAction"+questionId).show()
-        .off("click").on("click", function(e) {
-            $.ajax({
-                type: "POST",
-                url: theForm.prop("action"),
-                data: theForm.serialize(),
-                success: function(data) {
-                    questionText.text($('#questionTextInput'+questionId).val());
-                    questionText.show();
-                    $("#questionDeleteAction"+questionId).show();
-                    $("#questionEditAction"+questionId).show();
-                    $("#questionReorderAction"+questionId).show();
-                    $("#questionSaveAction"+questionId).hide();
-                    $("#questionCancelAction"+questionId).hide();
-                    theForm.hide();
-                    $("#flashmessages").html(data.flashmessage);
-                    setupAlertHide();
-                }
-            });
     });
 
     $("#questionCancelAction"+questionId).show()
@@ -200,6 +217,84 @@ function editTitleText() {
             $("#toolTitleCancelLink").hide();
             $("#toolTitleSaveLink").hide();
         });
+}
+function moveQuestionUp(questionId) {
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: "actions/ReorderQuestion.php?PHPSESSID=" + $("#sess").val(),
+        data: {
+            "question_id": questionId
+        },
+        success: function(data) {
+            var theQuestionMoved = $("#questionRow" + questionId);
+            var currentNumber = theQuestionMoved.data("question-number");
+            console.log('current num: ' + currentNumber);
+            if (currentNumber === 1) {
+                // Move to bottom
+                $("#newQuestionRow").before(theQuestionMoved);
+            } else {
+                // Move up one
+                theQuestionMoved.prev().before(theQuestionMoved);
+            }
+            // Fix up question numbers
+            var questionNum = 1;
+            $(".question-number").each(function() {
+                $(this).text(questionNum + ".");
+                $(this).parent().data("question-number", questionNum);
+                questionNum++;
+            });
+
+            $("#flashmessages").html(data.flashmessage);
+            setupAlertHide();
+        }
+    });
+}
+function deleteQuestion(questionId, skipconfirm = false) {
+    if (skipconfirm || confirmDeleteQuestion()) {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "actions/DeleteQuestion.php?PHPSESSID=" + $("#sess").val(),
+            data: {
+                "question_id": questionId
+            },
+            success: function(data) {
+                $("#questionRow" + questionId).remove();
+                // Fix up question numbers
+                var questionNum = 1;
+                $(".question-number").each(function() {
+                    $(this).text(questionNum + ".");
+                    $(this).parent().data("question-number", questionNum);
+                    questionNum++;
+                });
+                // Fix new question number
+                $("#newQuestionRow").data("question-number", questionNum);
+                $("#newQuestionNumber").text(questionNum + ".");
+
+                $("#flashmessages").html(data.flashmessage);
+                setupAlertHide();
+            }
+        });
+    }
+}
+function answerQuestion(questionId) {
+    var answerForm = $("#answerForm" + questionId);
+    $.ajax({
+        type: "POST",
+        dataType: "json",
+        url: answerForm.prop("action"),
+        data: answerForm.serialize(),
+        success: function(data) {
+            if (data.answer_content) {
+                answerForm.replaceWith(data.answer_content);
+            }
+            console.log(data.flashmessage);
+            $("#flashmessages").html(data.flashmessage);
+            console.log($("#flashmessages").html());
+            setupAlertHide();
+        }
+    });
 }
 function setupAlertHide() {
     // On load hide any alerts after 10 seconds

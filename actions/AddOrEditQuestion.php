@@ -21,7 +21,7 @@ if ($USER->instructor) {
     $currentTime = new DateTime('now', new DateTimeZone($CFG->timezone));
     $currentTime = $currentTime->format("Y-m-d H:i:s");
 
-    if ($questionText && $questionText != '' && $questionText != null) {
+    if (isset($questionText) && trim($questionText) != '') {
         if ($questionId > -1) {
             // Existing question
             $QW_DAO->updateQuestion($questionId, $questionText, $currentTime);
@@ -34,8 +34,8 @@ if ($USER->instructor) {
             // Create new question markup
             ob_start();
             ?>
-            <div class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row">
-                <div><?=$question["question_num"]?>.</div>
+            <div id="questionRow<?=$question["question_id"]?>" class="h3 inline flx-cntnr flx-row flx-nowrap flx-start question-row" data-question-number="<?=$question["question_num"]?>">
+                <div class="question-number"><?=$question["question_num"]?>.</div>
                 <div class="flx-grow-all question-text">
                     <span class="question-text-span" onclick="editQuestionText(<?=$question["question_id"]?>)" id="questionText<?=$question["question_id"]?>"><?= $question["question_txt"] ?></span>
                     <form id="questionTextForm<?=$question["question_id"]?>" onsubmit="return confirmDeleteQuestionBlank(<?=$question["question_id"]?>)" action="actions/AddOrEditQuestion.php" method="post" style="display:none;">
@@ -48,11 +48,11 @@ if ($USER->instructor) {
                     <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
                     <span class="sr-only">Edit Question Text</span>
                 </a>
-                <a id="questionReorderAction<?=$question["question_id"]?>" href="actions/ReorderQuestion.php?question_id=<?=$question["question_id"]?>&PHPSESSID=<?=$_POST["PHPSESSID"]?>">
+                <a id="questionReorderAction<?=$question["question_id"]?>" href="javascript:void(0);" onclick="moveQuestionUp(<?=$question["question_id"]?>)">
                     <span class="fa fa-fw fa-chevron-circle-up" aria-hidden="true"></span>
                     <span class="sr-only">Move Question Up</span>
                 </a>
-                <a id="questionDeleteAction<?=$question["question_id"]?>" onclck="return confirmDeleteQuestion();" href="actions/DeleteQuestion.php?question_id=<?=$question["question_id"]?>&PHPSESSID=<?=$_POST["PHPSESSID"]?>">
+                <a id="questionDeleteAction<?=$question["question_id"]?>" href="javascript:void(0);" onclick="deleteQuestion(<?=$question["question_id"]?>)">
                     <span aria-hidden="true" class="fa fa-fw fa-trash"></span>
                     <span class="sr-only">Delete Question</span>
                 </a>
@@ -67,7 +67,6 @@ if ($USER->instructor) {
             </div>
             <?php
             $result["new_question"] = ob_get_clean();
-            $result["next_question"] = $question["question_num"] + 1;
         }
         $_SESSION['success'] = 'Question Saved.';
     } else {
@@ -90,4 +89,7 @@ if ($USER->instructor) {
     echo json_encode($result, JSON_HEX_QUOT | JSON_HEX_TAG);
 
     exit;
+} else {
+    header( 'Location: '.addSession('../student-home.php') ) ;
 }
+

@@ -11,7 +11,7 @@ $p = $CFG->dbprefix;
 
 $QW_DAO = new QW_DAO($PDOX, $p);
 
-$question_id = isset($_GET["question_id"]) ? $_GET["question_id"] : false;
+$question_id = isset($_POST["question_id"]) ? $_POST["question_id"] : false;
 
 if ( $USER->instructor && $question_id ) {
     $questions = $QW_DAO->getQuestions($_SESSION["qw_id"]);
@@ -33,8 +33,21 @@ if ( $USER->instructor && $question_id ) {
         }
         $prevQuestion = $question;
     }
+
+    $_SESSION["success"] = "Question Order Saved.";
+
+    $result = array();
+
+    $OUTPUT->buffer=true;
+    $result["flashmessage"] = $OUTPUT->flashMessages();
+
+    header('Content-Type: application/json');
+
+    echo json_encode($result, JSON_HEX_QUOT | JSON_HEX_TAG);
+
+    exit;
+} else if ($USER->instructor) {
+    exit;
+} else {
+    header( 'Location: '.addSession('../student-home.php') ) ;
 }
-
-$_SESSION["success"] = "Question Order Saved.";
-
-header( 'Location: '.addSession('../instructor-home.php') ) ;

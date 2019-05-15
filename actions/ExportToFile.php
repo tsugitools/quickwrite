@@ -112,5 +112,8 @@ if ( $USER->instructor ) {
     header ('Pragma: public'); // HTTP/1.0
     $objWriter = PHPExcel_IOFactory::createWriter($exportFile, 'Excel5');
     $objWriter->save('php://output');
+} else {
+    header( 'Location: '.addSession('../student-home.php') ) ;
 }
+
 

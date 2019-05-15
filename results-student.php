@@ -31,8 +31,6 @@ $OUTPUT->bodyStart();
 
 include("menu.php");
 
-$OUTPUT->flashMessages();
-
 ?>
     <div class="container">
         <h1>
