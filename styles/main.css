@@ -212,6 +212,7 @@ label.h5 {
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
     background-color: #1066EB;
+    border-color: #ffffff;
     color: #ffffff;
 }
 @media (max-width: 767px) {
@@ -232,7 +233,7 @@ label.h5 {
     .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
     .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
     .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
-        color: #fffff;
+        color: #ffffff;
         background-color: transparent;
     }
 }
