@@ -18,7 +18,6 @@ $questionsForImport = $QW_DAO->findQuestionsForImport($USER->id, $_SESSION["qw_i
                     <p><em>No questions available from previous Quick Write instances.</em></p>
                     <?php
                 } else {
-                    echo "<pre>".var_dump($questionsForImport)."</pre>";
                     $questionMap = array();
                     foreach ($questionsForImport as $question) {
                         if (!array_key_exists($question["sitetitle"], $questionMap)) {
@@ -29,7 +28,6 @@ $questionsForImport = $QW_DAO->findQuestionsForImport($USER->id, $_SESSION["qw_i
                         }
                         array_push($questionMap[$question["sitetitle"]][$question["tooltitle"]], $question);
                     }
-                    echo "<pre>".var_dump($questionMap)."</pre>";
                     ?>
                     <form id="importForm" class="form" action="actions/ImportQuestions.php" method="post">
                         <div class="list-group">
@@ -45,31 +43,31 @@ $questionsForImport = $QW_DAO->findQuestionsForImport($USER->id, $_SESSION["qw_i
                                                 <span class="fa fa-chevron-down rotate" aria-hidden="true"></span>
                                             </a>
                                         </div>
+                                        <div id="site<?=$siteCount?>" class="col-xs-12 results-collapse collapse">
                                         <?php
                                         foreach ($questions_in_site as $tooltitle => $questions_in_tool) {
                                             ?>
-                                            <div id="site<?=$siteCount?>" class="col-xs-12 results-collapse collapse">
-                                                <div class="row response-row">
-                                                    <div class="col-sm-3">
-                                                        <h5><?=$tooltitle?></h5>
-                                                    </div>
-                                                    <div class="col-sm-offset-1 col-sm-8">
-                                                        <?php
-                                                        foreach ($questions_in_tool as $question) {
-                                                            ?>
-                                                            <div class="checkbox">
-                                                                <input type="checkbox" id="question<?=$question["question_id"]?>" name="question[]" value="<?=$question["question_id"]?>">
-                                                                <label for="question<?=$question["question_id"]?>"><?=$question["question_txt"]?></label>
-                                                            </div>
-                                                            <?php
-                                                        }
+                                            <div class="row response-row">
+                                                <div class="col-sm-3">
+                                                    <h5><?=$tooltitle?></h5>
+                                                </div>
+                                                <div class="col-sm-offset-1 col-sm-8">
+                                                    <?php
+                                                    foreach ($questions_in_tool as $question) {
                                                         ?>
-                                                    </div>
+                                                        <div class="checkbox">
+                                                            <input type="checkbox" id="question<?=$question["question_id"]?>" name="question[]" value="<?=$question["question_id"]?>">
+                                                            <label for="question<?=$question["question_id"]?>"><?=$question["question_txt"]?></label>
+                                                        </div>
+                                                        <?php
+                                                    }
+                                                    ?>
                                                 </div>
                                             </div>
                                             <?php
                                         }
                                         ?>
+                                        </div>
                                     </div>
                                 </div>
                                 <?php
