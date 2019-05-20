@@ -18,7 +18,7 @@ $questionsForImport = $QW_DAO->findQuestionsForImport($USER->id, $_SESSION["qw_i
                     <p><em>No questions available from previous Quick Write instances.</em></p>
                     <?php
                 } else {
-                    var_dump($questionsForImport);
+                    echo "<pre>".var_dump($questionsForImport)."</pre>";
                     $questionMap = array();
                     foreach ($questionsForImport as $question) {
                         if (!array_key_exists($question["sitetitle"], $questionMap)) {
@@ -29,7 +29,7 @@ $questionsForImport = $QW_DAO->findQuestionsForImport($USER->id, $_SESSION["qw_i
                         }
                         array_push($questionMap[$question["sitetitle"]][$question["tooltitle"]], $question);
                     }
-                    var_dump($questionMap);
+                    echo "<pre>".var_dump($questionMap)."</pre>";
                     ?>
                     <form id="importForm" class="form" action="actions/ImportQuestions.php" method="post">
                         <div class="list-group">
