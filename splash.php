@@ -29,7 +29,7 @@ $OUTPUT->bodyStart();
 ?>
     <section class="splash-container">
         <article class="splash-content">
-            <header><h1>Quick Write</h1></header>
+            <header><h1 class="splash-header">Quick Write</h1></header>
             <?php
             if ($USER->instructor) {
                 ?>

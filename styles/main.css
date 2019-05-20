@@ -159,7 +159,7 @@ label.h5 {
     margin-top: 0;
 }
 .navbar-default {
-    background-color: #1066EB;
+    background: #1066EB;
     border-color: #1066EB;
 }
 .navbar-default .navbar-brand {
@@ -185,33 +185,33 @@ label.h5 {
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
     color: #ffffff;
-    background-color: #1066EB;
+    background: #1066EB;
 }
 .navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
 .navbar-default .navbar-nav > .disabled > a:focus {
     color: #ffffff;
-    background-color: transparent;
+    background: transparent;
 }
 .navbar-default .navbar-toggle {
     border-color: #ffffff;
 }
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-    background-color: #1066EB;
+    background: #1066EB;
 }
 .navbar-default .navbar-toggle .icon-bar {
-    background-color: #ffffff;
+    background: #ffffff;
 }
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
     border-color: #ffffff;
-    background-color: #1066EB;
+    background: #1066EB;
 }
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-    background-color: #1066EB;
+    background: #1066EB;
     border-color: #ffffff;
     color: #ffffff;
 }
@@ -222,19 +222,19 @@ label.h5 {
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
         color: #ffffff;
-        background-color: transparent;
+        background: transparent;
     }
     .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
     .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
     .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
         color: #ffffff;
-        background-color: #1066EB;
+        background: #1066EB;
     }
     .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a,
     .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:hover,
     .navbar-default .navbar-nav .open .dropdown-menu > .disabled > a:focus {
         color: #ffffff;
-        background-color: transparent;
+        background: transparent;
     }
 }
 .navbar-default .navbar-link {
@@ -353,5 +353,8 @@ label.h5 {
 }
 .splash-content {
     text-align: center;
+    color: #ffffff;
+}
+h1.splash-header {
     color: #ffffff;
 }
